@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/drawable/btn_background.xml" value="0.2115" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/activity_add_book.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/activity_main_screen.xml" value="0.25" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/activity_pdfreader.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/book_view.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/fragment_add_book.xml" value="0.4" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/row_book_view.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/layout/row_item_connect.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/menu/main_menu.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/menu/popup_menu.xml" value="0.21927083333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
