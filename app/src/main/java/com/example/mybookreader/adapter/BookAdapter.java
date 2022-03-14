@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,19 +19,19 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybookreader.MainScreen;
 import com.example.mybookreader.PDFOpener;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> implements Filterable {
     private final Context mContext;
     private List<Book> mListBook;
-    private List<Book> mListBookOld;
 
     public BookAdapter(Context mContext) {
         this.mContext = mContext;
@@ -40,7 +39,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     public void setData(List<Book> mListBook) {
         this.mListBook = mListBook;
-        this.mListBookOld = mListBook;
         notifyDataSetChanged();
     }
 
@@ -102,30 +100,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         //int tempId = 0;
 
         mListBook.remove(position);
-        for (int i = 0; i < mListBookOld.size(); i++) {
-            if (mListBookOld.get(i).getId() == id) {
-                mListBookOld.remove(i);
+        for (int i = 0; i < MainScreen.listBook.size(); i++) {
+            if (MainScreen.listBook.get(i).getId() == id) {
+                MainScreen.listBook.remove(i);
                 //tempId = i;
                 break;
             }
         }
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mListBook.size());
-        notifyItemRangeChanged(position, mListBookOld.size());
-
-//        int finalTempId = tempId;
-//        Snackbar.make(view, "Undo Deletion of: " + tempBook.getName(), Snackbar.LENGTH_LONG)
-//                .setAction("UNDO", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        mListBook.add(position, tempBook);
-//                        mListBookOld.add(finalTempId, tempBook);
-//                        notifyDataSetChanged();
-////                        notifyItemInserted(position);
-////                        notifyItemRangeInserted(position, mListBookOld.size());
-//                    }
-//                }).setTextColor(mContext.getResources().getColor(android.R.color.holo_orange_dark))
-//                .show();
+        notifyItemRangeChanged(position, MainScreen.listBook.size());
     }
 
     private void onClickOpenBook(String uri) {
@@ -141,7 +125,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return 0;
     }
 
-    public class BookViewHolder extends RecyclerView.ViewHolder {
+    public static class BookViewHolder extends RecyclerView.ViewHolder {
         private CardView layoutItems;
         private ImageView imgCover;
         private TextView tvName;
@@ -163,10 +147,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    mListBook = mListBookOld;
+                    mListBook = MainScreen.listBook;
                 } else {
                     List<Book> list = new ArrayList<>();
-                    for (Book it : mListBookOld) {
+                    for (Book it : MainScreen.listBook) {
                         if (it.getName().toLowerCase().contains(strSearch.toLowerCase())) {
                             list.add(it);
                         }

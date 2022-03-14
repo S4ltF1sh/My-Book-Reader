@@ -21,13 +21,19 @@ import android.widget.TextView;
 import com.example.mybookreader.adapter.BookAdapter;
 import com.example.mybookreader.model.Book;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainScreen extends AppCompatActivity {
 
-    private List<Book> listBook = new ArrayList<>();
-    TextView txt_pathShow;
+    public static List<Book> listBook = new ArrayList<>();
+    private static boolean isCalled = false;
     private Button btn_addBook;
 
     private RecyclerView rcvBook;
@@ -43,6 +49,11 @@ public class MainScreen extends AppCompatActivity {
                         Book book = (Book) intent.getExtras().get("new_book");
                         listBook.add(book);
                         mBookAdapter.setData(listBook);
+                        try {
+                            writeDataIntoFile();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -52,7 +63,11 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        txt_pathShow = (TextView) findViewById(R.id.txt_pathShow);
+
+        if (!isCalled) {
+            readDataFromFile();
+            isCalled = true;
+        }
 
         //list book view by RecyclerView
         rcvBook = findViewById(R.id.rcv_book);
@@ -61,8 +76,6 @@ public class MainScreen extends AppCompatActivity {
         rcvBook.setLayoutManager(gridLayoutManager);
         mBookAdapter.setData(listBook);
         rcvBook.setAdapter(mBookAdapter);
-
-        loadBook();
 
         //add new book
         btn_addBook = (Button) findViewById(R.id.btn_addBook);
@@ -75,15 +88,15 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
-    private void loadBook() {
-//        listBook.add(new Book("Ma thổi đèn 1", R.drawable.cover1, "âsđâsda"));
-//        listBook.add(new Book("Ma thổi đèn 2", R.drawable.cover2, "áđâsđá"));
-//        listBook.add(new Book("Ma thổi đèn 3", R.drawable.cover3));
-//        listBook.add(new Book("Ma thổi đèn 4", R.drawable.cover4));
-//        listBook.add(new Book("Ma thổi đèn 5", R.drawable.cover5));
-//        listBook.add(new Book("Ma thổi đèn 6", R.drawable.cover6));
-//        listBook.add(new Book("Ma thổi đèn 7", R.drawable.cover7));
-//        listBook.add(new Book("Ma thổi đèn 8", R.drawable.cover8));
+    @Override
+    protected void onStop() {
+        try {
+            writeDataIntoFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
     }
 
     @Override
@@ -119,6 +132,63 @@ public class MainScreen extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    public void readDataFromFile() {
+        FileInputStream fis = null;
+        ObjectInputStream objin = null;
+        listBook.clear();
+
+        try {
+            fis = openFileInput("com\\example\\mybookreader\\data\\DATA.txt");
+            objin = new ObjectInputStream(fis);
+            listBook = (List<Book>) objin.readObject();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (objin != null) {
+                    objin.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        for (int i = 1; i <= listBook.size(); i++) {
+            Book temp = listBook.get(i - 1);
+            temp.setId(i);
+            listBook.set(i - 1, temp);
+        }
+        Book.idnum = listBook.size();
+    }
+
+    public void writeDataIntoFile() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream objout = null;
+
+        try {
+            fos = this.openFileOutput("com\\example\\mybookreader\\data\\DATA.txt", MODE_PRIVATE);
+            objout = new ObjectOutputStream(fos);
+            objout.writeObject(listBook);
+            objout.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+                if (objout != null) {
+                    objout.close();
+                }
+            } catch (Exception e) {
+
+            }
+        }
     }
 }
 

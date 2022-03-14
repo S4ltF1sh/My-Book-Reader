@@ -38,7 +38,6 @@ public class AddBook extends AppCompatActivity {
                         Intent intent = result.getData();
                         Uri selectedPDF = intent.getData();
 
-                        //uriFile = RealPathUtil.getRealPath(AddBook.this, selectedPDF);
                         uriFile = UriUtils.getPathFromUri(AddBook.this, selectedPDF);
                         mUriFile.setText(uriFile);
                     }
@@ -54,7 +53,6 @@ public class AddBook extends AppCompatActivity {
                         Intent intent = result.getData();
                         Uri selectedImage = intent.getData();
 
-                        //uriCover = RealPathUtil.getRealPath(AddBook.this, selectedImage);
                         uriCover = UriUtils.getPathFromUri(AddBook.this, selectedImage);
                         mUriCover.setText(uriCover);
                     }
