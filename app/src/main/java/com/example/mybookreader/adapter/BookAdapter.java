@@ -19,7 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.MainScreen;
+import com.example.mybookreader.HomeFragment;
+import com.example.mybookreader.HomeFragment;
 import com.example.mybookreader.PDFOpener;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
@@ -100,16 +101,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         //int tempId = 0;
 
         mListBook.remove(position);
-        for (int i = 0; i < MainScreen.listBook.size(); i++) {
-            if (MainScreen.listBook.get(i).getId() == id) {
-                MainScreen.listBook.remove(i);
+        for (int i = 0; i < HomeFragment.listBook.size(); i++) {
+            if (HomeFragment.listBook.get(i).getId() == id) {
+                HomeFragment.listBook.remove(i);
                 //tempId = i;
                 break;
             }
         }
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mListBook.size());
-        notifyItemRangeChanged(position, MainScreen.listBook.size());
+        notifyItemRangeChanged(position, HomeFragment.listBook.size());
     }
 
     private void onClickOpenBook(String uri) {
@@ -147,10 +148,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    mListBook = MainScreen.listBook;
+                    mListBook = HomeFragment.listBook;
                 } else {
                     List<Book> list = new ArrayList<>();
-                    for (Book it : MainScreen.listBook) {
+                    for (Book it : HomeFragment.listBook) {
                         if (it.getName().toLowerCase().contains(strSearch.toLowerCase())) {
                             list.add(it);
                         }
