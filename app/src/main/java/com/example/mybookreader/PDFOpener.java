@@ -29,7 +29,7 @@ public class PDFOpener extends AppCompatActivity {
         //Uri pdfFile = Uri.parse(getIntent().getStringExtra("FileUri"));
         pdfView.fromFile(new File(getIntent().getStringExtra("FileUri")))
                 .enableSwipe(true) // allows to block changing pages using swipe
-                .swipeHorizontal(true)
+                .swipeHorizontal(false)
                 .enableDoubletap(true)
                 .defaultPage(0)
                 .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)

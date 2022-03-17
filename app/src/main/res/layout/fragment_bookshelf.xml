@@ -6,14 +6,9 @@
     tools:context=".BookshelfFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:text="@string/bookshelf_fragment" />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_book_shelf"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:text="@string/bookshelf_fragment" />
 
 </RelativeLayout>
