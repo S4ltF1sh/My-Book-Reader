@@ -2,6 +2,8 @@ package com.example.mybookreader.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybookreader.BookShelfActivity;
+import com.example.mybookreader.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
@@ -20,14 +24,14 @@ import java.util.List;
 public class BookShelfAdapter extends RecyclerView.Adapter<BookShelfAdapter.BookShelfViewHolder> {
 
     private final Context mContext;
-    private List<BookShelf> mListBookShelf;
+    //private List<BookShelf> mListBookShelf;
 
     public BookShelfAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     public void setData(List<BookShelf> mListBookShelf) {
-        this.mListBookShelf = mListBookShelf;
+        //this.mListBookShelf = mListBookShelf;
         notifyDataSetChanged();
     }
 
@@ -40,24 +44,32 @@ public class BookShelfAdapter extends RecyclerView.Adapter<BookShelfAdapter.Book
 
     @Override
     public void onBindViewHolder(@NonNull BookShelfViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        BookShelf bookShelf = mListBookShelf.get(position);
+        BookShelf bookShelf = BookshelfFragment.mListBookShelf.get(position);
         if (bookShelf == null)
             return;
 
         holder.tvName.setText(bookShelf.getName());
 
-//        holder.tvName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickOpenBookShelf(position);
+            }
+        });
+    }
+
+    private void onClickOpenBookShelf(int position) {
+        Intent intent = new Intent(mContext, BookShelfActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("position", position);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
     }
 
     @Override
     public int getItemCount() {
-        if (mListBookShelf != null)
-            return mListBookShelf.size();
+        if (BookshelfFragment.mListBookShelf != null)
+            return BookshelfFragment.mListBookShelf.size();
         return 0;
     }
 

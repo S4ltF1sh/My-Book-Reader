@@ -1,14 +1,23 @@
 package com.example.mybookreader.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class BookShelf {
+public class BookShelf implements Serializable {
     private List<Book> listBook;
     private String name;
     private int id = 0;
     public static int idNum = 0;
 
     public BookShelf() {
+    }
+
+    public BookShelf(String name) {
+        this.name = name;
+        this.listBook = new ArrayList<>();
+        idNum++;
+        id = idNum;
     }
 
     public BookShelf(List<Book> listBook, String name) {

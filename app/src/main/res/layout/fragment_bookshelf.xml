@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".BookshelfFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,5 +16,16 @@
         android:id="@+id/rcv_book_shelf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <android.widget.Button
+        android:id="@+id/btn_addNewBookShelf"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_background"
+        android:text="@string/add"
+        android:textSize="20sp" />
 
 </RelativeLayout>
