@@ -1,4 +1,4 @@
-package com.example.mybookreader;
+package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.mybookreader.adapter.BookAdapter;
+import com.example.mybookreader.R;
+import com.example.mybookreader.activities.AddBookShelf;
 import com.example.mybookreader.adapter.BookShelfAdapter;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
@@ -84,7 +84,7 @@ public class BookshelfFragment extends Fragment {
             }
         });
 
-        loadBookShelf();
+        //loadBookShelf();
 
         //list book view by RecyclerView
         rcvBookShelf = mView.findViewById(R.id.rcv_book_shelf);

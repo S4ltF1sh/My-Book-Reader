@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.mybookreader.BookshelfFragment;
-import com.example.mybookreader.HomeFragment;
+import com.example.mybookreader.fragments.BookshelfFragment;
+import com.example.mybookreader.fragments.HomeFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {

@@ -7,6 +7,11 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/add_to_bookshelf"
+        android:title="Add to bookshelf"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/delete"
         android:title="Delete"
         app:showAsAction="never"/>

@@ -1,15 +1,16 @@
-package com.example.mybookreader;
+package com.example.mybookreader.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mybookreader.fragments.BookshelfFragment;
+import com.example.mybookreader.R;
 import com.example.mybookreader.model.BookShelf;
 
 public class AddBookShelf extends AppCompatActivity {
@@ -20,9 +21,11 @@ public class AddBookShelf extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getSupportActionBar().hide();
         setContentView(R.layout.activity_add_book_shelf);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add New BookShelf");
 
         mBookShelfName = (EditText) findViewById(R.id.edt_bookshelf_name);
         mBtnAddBookShelf = (Button) findViewById(R.id.btn_addBookShelf);
@@ -33,6 +36,12 @@ public class AddBookShelf extends AppCompatActivity {
                 onClickAddBookShelf(String.valueOf(mBookShelfName.getText()));
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private void onClickAddBookShelf(String bookshelfName) {

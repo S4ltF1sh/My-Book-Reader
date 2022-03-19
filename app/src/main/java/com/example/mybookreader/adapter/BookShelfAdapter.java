@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.BookShelfActivity;
-import com.example.mybookreader.BookshelfFragment;
+import com.example.mybookreader.activities.BookShelfViewActivity;
+import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
-import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
 
 import java.util.List;
@@ -59,7 +57,7 @@ public class BookShelfAdapter extends RecyclerView.Adapter<BookShelfAdapter.Book
     }
 
     private void onClickOpenBookShelf(int position) {
-        Intent intent = new Intent(mContext, BookShelfActivity.class);
+        Intent intent = new Intent(mContext, BookShelfViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("position", position);
         intent.putExtras(bundle);

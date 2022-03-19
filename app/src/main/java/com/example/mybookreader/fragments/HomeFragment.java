@@ -1,4 +1,4 @@
-package com.example.mybookreader;
+package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.mybookreader.R;
+import com.example.mybookreader.activities.AddBook;
 import com.example.mybookreader.adapter.BookAdapter;
 import com.example.mybookreader.model.Book;
 import com.google.android.material.tabs.TabLayout;

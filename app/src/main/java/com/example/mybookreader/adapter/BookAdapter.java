@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +20,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.HomeFragment;
-import com.example.mybookreader.HomeFragment;
-import com.example.mybookreader.PDFOpener;
+import com.example.mybookreader.activities.AddBookToBookShelf;
+import com.example.mybookreader.fragments.HomeFragment;
+import com.example.mybookreader.activities.PDFOpener;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickOpenBook(book.getPath());
+                onClickOpenBook(book);
             }
         });
 
@@ -81,7 +81,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.read:
-                                onClickOpenBook(book.getPath());
+                                onClickOpenBook(book);
+                                break;
+                            case R.id.add_to_bookshelf:
+                                onClickAddBookToBookShelf(position);
                                 break;
                             case R.id.delete:
                                 deleteItem(position, view);
@@ -93,6 +96,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 return false;
             }
         });
+    }
+
+    private void onClickAddBookToBookShelf(int position) {
+        Intent intent = new Intent(mContext, AddBookToBookShelf.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("position_of_book_need_to_add_to_bookshelf", position);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
     }
 
     private void deleteItem(int position, View view) {
@@ -113,9 +124,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         notifyItemRangeChanged(position, HomeFragment.listBook.size());
     }
 
-    private void onClickOpenBook(String uri) {
+    private void onClickOpenBook(Book book) {
         Intent intent = new Intent(mContext, PDFOpener.class);
-        intent.putExtra("FileUri", uri);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("book_need_to_be_opened", book);
+        intent.putExtras(bundle);
         mContext.startActivity(intent);
     }
 

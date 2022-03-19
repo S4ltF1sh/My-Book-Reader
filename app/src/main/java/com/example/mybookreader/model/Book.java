@@ -6,6 +6,7 @@ public class Book implements Serializable {
     private String name;
     private String coverPath;
     private String path;
+    private int savedPage;
     private int id = 0;
     public static int idnum = 0;
 
@@ -21,6 +22,7 @@ public class Book implements Serializable {
         this.name = name;
         this.coverPath = coverPath;
         this.path = path;
+        this.savedPage = 0;
         idnum++;
         id = idnum;
     }
@@ -47,5 +49,13 @@ public class Book implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public int getSavedPage() {
+        return savedPage;
+    }
+
+    public void setSavedPage(int savedPage) {
+        this.savedPage = savedPage;
     }
 }

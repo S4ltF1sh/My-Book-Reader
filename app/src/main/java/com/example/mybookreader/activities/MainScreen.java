@@ -1,4 +1,4 @@
-package com.example.mybookreader;
+package com.example.mybookreader.activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 
+import com.example.mybookreader.R;
 import com.example.mybookreader.adapter.BookAdapter;
 import com.example.mybookreader.adapter.ViewPagerAdapter;
 import com.example.mybookreader.model.Book;

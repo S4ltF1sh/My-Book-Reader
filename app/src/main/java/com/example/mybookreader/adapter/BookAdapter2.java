@@ -5,12 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -19,15 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.HomeFragment;
-import com.example.mybookreader.HomeFragment;
-import com.example.mybookreader.PDFOpener;
+import com.example.mybookreader.activities.PDFOpener;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
@@ -66,7 +61,7 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickOpenBook(book.getPath());
+                onClickOpenBook(book);
             }
         });
 
@@ -81,7 +76,7 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.read:
-                                onClickOpenBook(book.getPath());
+                                onClickOpenBook(book);
                                 break;
                             case R.id.delete:
                                 removeItem(position, view);
@@ -105,9 +100,11 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
         notifyItemRangeChanged(position, mListBook.size());
     }
 
-    private void onClickOpenBook(String uri) {
+    private void onClickOpenBook(Book book) {
         Intent intent = new Intent(mContext, PDFOpener.class);
-        intent.putExtra("FileUri", uri);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("book_need_to_be_opened", book);
+        intent.putExtras(bundle);
         mContext.startActivity(intent);
     }
 

@@ -1,4 +1,4 @@
-package com.example.mybookreader;
+package com.example.mybookreader.activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,11 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.mybookreader.R;
+import com.example.mybookreader.UriUtils;
 import com.example.mybookreader.model.Book;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class AddBook extends AppCompatActivity {
@@ -65,9 +62,9 @@ public class AddBook extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_add_book);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add New Book");
 
         mUriCover = findViewById(R.id.tv_uriCover);
         mUriFile = findViewById(R.id.tv_uriPDF);
@@ -78,7 +75,7 @@ public class AddBook extends AppCompatActivity {
         mLinkCover = findViewById(R.id.btn_addCover);
         mLinkFile = findViewById(R.id.btn_addFile);
         mAdd = findViewById(R.id.f_btn_addBook);
-        mCancel = findViewById(R.id.f_btn_cancel);
+//        mCancel = findViewById(R.id.f_btn_cancel);
 
         mLinkCover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,11 +112,17 @@ public class AddBook extends AppCompatActivity {
             }
         });
 
-        mCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+//        mCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onBackPressed();
+//            }
+//        });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

@@ -27,10 +27,6 @@ public class BookShelf implements Serializable {
         id = idNum;
     }
 
-    public void add(Book book) {
-        listBook.add(book);
-    }
-
     public List<Book> getListBook() {
         return listBook;
     }
