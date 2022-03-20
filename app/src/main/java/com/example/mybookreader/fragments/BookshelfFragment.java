@@ -2,6 +2,7 @@ package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,12 @@ import com.example.mybookreader.adapter.BookShelfAdapter;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +44,10 @@ public class BookshelfFragment extends Fragment {
 
     View mView;
     public static List<BookShelf> mListBookShelf = new ArrayList<>();
+    private static boolean isCalled = false;
 
     private RecyclerView rcvBookShelf;
     private BookShelfAdapter mBookShelfAdapter;
-    private List<Book> mlistBook = new ArrayList<>();
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -50,11 +58,11 @@ public class BookshelfFragment extends Fragment {
                         BookShelf bookShelf = (BookShelf) intent.getExtras().get("new_bookshelf");
                         mListBookShelf.add(bookShelf);
                         mBookShelfAdapter.setData(mListBookShelf);
-//                        try {
-//                            writeDataIntoFile();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            writeDataIntoFile();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -76,6 +84,11 @@ public class BookshelfFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_bookshelf, container, false);
         setHasOptionsMenu(true);
 
+        if (!isCalled) {
+            readDataFromFile();
+            isCalled = true;
+        }
+
         Button btn_addNewBookShelf = (Button) mView.findViewById(R.id.btn_addNewBookShelf);
         btn_addNewBookShelf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,16 +97,14 @@ public class BookshelfFragment extends Fragment {
             }
         });
 
-        //loadBookShelf();
-
         //list book view by RecyclerView
         rcvBookShelf = mView.findViewById(R.id.rcv_book_shelf);
         mBookShelfAdapter = new BookShelfAdapter(getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rcvBookShelf.setLayoutManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//        rcvBookShelf.setLayoutManager(linearLayoutManager);
         mBookShelfAdapter.setData(mListBookShelf);
         rcvBookShelf.setAdapter(mBookShelfAdapter);
-        rcvBookShelf.addItemDecoration(new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation()));
+        rcvBookShelf.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         return mView;
     }
@@ -103,12 +114,73 @@ public class BookshelfFragment extends Fragment {
         mActivityResultLauncher.launch(intent);
     }
 
+    @Override
+    public void onStop() {
+        try {
+            writeDataIntoFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.v("info: ", "onStop() called");
+        super.onStop();
 
-    public void loadBookShelf() {
-        mlistBook.add(new Book("Ma thổi đèn 1", "", ""));
-        mListBookShelf.add(new BookShelf(mlistBook, "Ma thổi đèn"));
-        mListBookShelf.add(new BookShelf(mlistBook, "Phàm nhân tu tiên"));
-        mListBookShelf.add(new BookShelf(mlistBook, "Vũ Hạ Đích Hảo Đại"));
-        mListBookShelf.add(new BookShelf(mlistBook, "Ma thổi đèn"));
     }
+
+    public void readDataFromFile() {
+        FileInputStream fis = null;
+        ObjectInputStream objin = null;
+        mListBookShelf.clear();
+
+        try {
+            fis = getActivity().openFileInput("com\\example\\mybookreader\\data\\BOOK_SHELF_DATA.txt");
+            objin = new ObjectInputStream(fis);
+            mListBookShelf = (List<BookShelf>) objin.readObject();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (objin != null) {
+                    objin.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        for (int i = 1; i <= mListBookShelf.size(); i++) {
+            BookShelf temp = mListBookShelf.get(i - 1);
+            temp.setId(i);
+            mListBookShelf.set(i - 1, temp);
+        }
+        Book.idnum = mListBookShelf.size();
+    }
+
+    public void writeDataIntoFile() throws IOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream objout = null;
+
+        try {
+            fos = this.getActivity().openFileOutput("com\\example\\mybookreader\\data\\BOOK_SHELF_DATA.txt", getActivity().MODE_PRIVATE);
+            objout = new ObjectOutputStream(fos);
+            objout.writeObject(mListBookShelf);
+            objout.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+                if (objout != null) {
+                    objout.close();
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
 }

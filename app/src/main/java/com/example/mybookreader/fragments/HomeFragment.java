@@ -2,6 +2,7 @@ package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.widget.Button;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.AddBook;
+import com.example.mybookreader.activities.MainScreen;
 import com.example.mybookreader.adapter.BookAdapter;
 import com.example.mybookreader.model.Book;
 import com.google.android.material.tabs.TabLayout;
@@ -85,6 +87,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
+
+        ((MainScreen) getActivity()).Hello();
 
         if (!isCalled) {
             readDataFromFile();

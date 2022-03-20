@@ -14,7 +14,7 @@
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/menu/main_menu.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader/app/src/main/res/menu/popup_menu.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/btn_background.xml" value="0.166" />
-        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book.xml" value="0.264" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book_shelf.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book_to_book_shelf.xml" value="0.176" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_book_shelf.xml" value="0.21927083333333333" />
@@ -34,5 +34,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

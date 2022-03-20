@@ -24,7 +24,7 @@ public class AddBook extends AppCompatActivity {
 
     TextView mUriCover, mUriFile;
     EditText mTitle, Author;
-    Button mLinkCover, mLinkFile, mAdd, mCancel;
+    Button mLinkCover, mLinkFile, mAdd;
 
     String title, uriFile, uriCover;
 
@@ -75,7 +75,6 @@ public class AddBook extends AppCompatActivity {
         mLinkCover = findViewById(R.id.btn_addCover);
         mLinkFile = findViewById(R.id.btn_addFile);
         mAdd = findViewById(R.id.f_btn_addBook);
-//        mCancel = findViewById(R.id.f_btn_cancel);
 
         mLinkCover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,13 +110,6 @@ public class AddBook extends AppCompatActivity {
                 finish();
             }
         });
-
-//        mCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onBackPressed();
-//            }
-//        });
     }
 
     @Override
