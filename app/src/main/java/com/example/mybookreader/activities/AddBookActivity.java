@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import com.example.mybookreader.UriUtils;
 import com.example.mybookreader.model.Book;
 
 
-public class AddBook extends AppCompatActivity {
+public class AddBookActivity extends AppCompatActivity {
 
     TextView mUriCover, mUriFile;
     EditText mTitle, Author;
@@ -36,7 +35,7 @@ public class AddBook extends AppCompatActivity {
                         Intent intent = result.getData();
                         Uri selectedPDF = intent.getData();
 
-                        uriFile = UriUtils.getPathFromUri(AddBook.this, selectedPDF);
+                        uriFile = UriUtils.getPathFromUri(AddBookActivity.this, selectedPDF);
                         mUriFile.setText(uriFile);
                     }
                 }
@@ -51,7 +50,7 @@ public class AddBook extends AppCompatActivity {
                         Intent intent = result.getData();
                         Uri selectedImage = intent.getData();
 
-                        uriCover = UriUtils.getPathFromUri(AddBook.this, selectedImage);
+                        uriCover = UriUtils.getPathFromUri(AddBookActivity.this, selectedImage);
                         mUriCover.setText(uriCover);
                     }
                 }
@@ -102,7 +101,7 @@ public class AddBook extends AppCompatActivity {
                 if (mTitle == null || mTitle.getText().equals("") || uriFile == null || uriCover == null)
                     return;
                 title = String.valueOf(mTitle.getText());
-                Intent intent = new Intent(AddBook.this, MainScreen.class);
+                Intent intent = new Intent(AddBookActivity.this, MainScreenActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("new_book", new Book(title, uriCover, uriFile));
                 intent.putExtras(bundle);

@@ -2,7 +2,6 @@ package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,12 +20,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.mybookreader.R;
-import com.example.mybookreader.activities.AddBookShelf;
-import com.example.mybookreader.adapter.BookShelfAdapter;
+import com.example.mybookreader.activities.AddBookShelfActivity;
+import com.example.mybookreader.adapter.BookShelfViewAdapter;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,7 +44,7 @@ public class BookshelfFragment extends Fragment {
     private static boolean isCalled = false;
 
     private RecyclerView rcvBookShelf;
-    private BookShelfAdapter mBookShelfAdapter;
+    private static BookShelfViewAdapter mBookShelfViewAdapter;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -57,7 +54,7 @@ public class BookshelfFragment extends Fragment {
                         Intent intent = result.getData();
                         BookShelf bookShelf = (BookShelf) intent.getExtras().get("new_bookshelf");
                         mListBookShelf.add(bookShelf);
-                        mBookShelfAdapter.setData(mListBookShelf);
+                        mBookShelfViewAdapter.setData(mListBookShelf);
                         try {
                             writeDataIntoFile();
                         } catch (Exception e) {
@@ -99,18 +96,18 @@ public class BookshelfFragment extends Fragment {
 
         //list book view by RecyclerView
         rcvBookShelf = mView.findViewById(R.id.rcv_book_shelf);
-        mBookShelfAdapter = new BookShelfAdapter(getContext());
+        mBookShelfViewAdapter = new BookShelfViewAdapter(getContext());
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 //        rcvBookShelf.setLayoutManager(linearLayoutManager);
-        mBookShelfAdapter.setData(mListBookShelf);
-        rcvBookShelf.setAdapter(mBookShelfAdapter);
+        mBookShelfViewAdapter.setData(mListBookShelf);
+        rcvBookShelf.setAdapter(mBookShelfViewAdapter);
         rcvBookShelf.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         return mView;
     }
 
     private void onClickAddNewBookShelf() {
-        Intent intent = new Intent(getContext(), AddBookShelf.class);
+        Intent intent = new Intent(getContext(), AddBookShelfActivity.class);
         mActivityResultLauncher.launch(intent);
     }
 
@@ -124,6 +121,15 @@ public class BookshelfFragment extends Fragment {
         Log.v("info: ", "onStop() called");
         super.onStop();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mBookShelfViewAdapter != null) {
+            mBookShelfViewAdapter.notifyDataSetChanged();
+        }
     }
 
     public void readDataFromFile() {
@@ -181,6 +187,21 @@ public class BookshelfFragment extends Fragment {
 
             }
         }
+    }
+
+    public static void removeBookFromAllBookshelf(int id) {
+        for (int i = 0; i < mListBookShelf.size(); i++) {
+            List<Book> tmpListBook = mListBookShelf.get(i).getListBook();
+            for (int j = 0; j < tmpListBook.size(); j++) {
+                if (id == tmpListBook.get(j).getId()) {
+                    tmpListBook.remove(j);
+                    mListBookShelf.get(i).setListBook(tmpListBook);
+                    mBookShelfViewAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
+        //mBookShelfViewAdapter.setData(mListBookShelf);
     }
 
 }

@@ -1,24 +1,54 @@
 package com.example.mybookreader.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.mybookreader.adapter.AddBookToBookShelfAdapter;
 import com.example.mybookreader.R;
+import com.example.mybookreader.fragments.BookshelfFragment;
+import com.example.mybookreader.fragments.HomeFragment;
+import com.example.mybookreader.model.Book;
+import com.example.mybookreader.model.BookShelf;
 
-public class AddBookToBookShelf extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddBookToBookShelfActivity extends AppCompatActivity {
     private RecyclerView rcvBookShelf;
     private AddBookToBookShelfAdapter mAddBookToBookShelfAdapter;
 
     private Button btn_addBookToNewBookShelf;
 
     public static int positionOfBookNeedToAddToBookshelf;
+
+    private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent intent = result.getData();
+                        BookShelf bookShelf = (BookShelf) intent.getExtras().get("new_bookshelf");
+
+                        List<Book> tmpBookshelf = new ArrayList<>();
+                        tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelfActivity.positionOfBookNeedToAddToBookshelf));
+                        bookShelf.setListBook(tmpBookshelf);
+                        BookshelfFragment.mListBookShelf.add(bookShelf);
+                        finish();
+                    }
+                }
+            }
+    );
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,10 +85,12 @@ public class AddBookToBookShelf extends AppCompatActivity {
     }
 
     private void onClickAddBookToNewBookShelf() {
+        Intent intent = new Intent(AddBookToBookShelfActivity.this, AddBookShelfActivity.class);
+        mActivityResultLauncher.launch(intent);
     }
 
 
-    public AddBookToBookShelf() {
+    public AddBookToBookShelfActivity() {
         // Required empty public constructor
     }
 }

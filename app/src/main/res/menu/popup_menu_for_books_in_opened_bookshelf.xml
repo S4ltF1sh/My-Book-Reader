@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/read_for_books_in_opened_bookshelf"
+        android:title="Read"
+        app:showAsAction="never"/>
+
+<!--    <item-->
+<!--        android:id="@+id/add_to_bookshelf"-->
+<!--        android:title="Add to bookshelf"-->
+<!--        app:showAsAction="never"/>-->
+
+    <item
+        android:id="@+id/remove_from_bookshelf_for_books_in_opened_bookshelf"
+        android:title="Remove from bookshelf"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/remove_from_library_for_books_in_opened_bookshelf"
+        android:title="Remove from library"
+        app:showAsAction="never"/>
+</menu>

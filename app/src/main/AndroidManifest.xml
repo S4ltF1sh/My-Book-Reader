@@ -16,22 +16,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBookReader">
         <activity
-            android:name=".activities.AddBookToBookShelf"
+            android:name=".activities.AddBookToBookShelfActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddBookShelf"
+            android:name=".activities.AddBookShelfActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.BookShelfViewActivity"
+            android:name=".activities.OpenedBookshelfActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddBook"
+            android:name=".activities.AddBookActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PDFOpener"
+            android:name=".activities.PDFOpenerActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainScreen"
+            android:name=".activities.MainScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

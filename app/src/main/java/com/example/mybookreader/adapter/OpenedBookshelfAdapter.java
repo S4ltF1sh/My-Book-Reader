@@ -18,18 +18,20 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.activities.PDFOpener;
+import com.example.mybookreader.activities.PDFOpenerActivity;
 import com.example.mybookreader.R;
+import com.example.mybookreader.fragments.BookshelfFragment;
+import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
 
 import java.io.File;
 import java.util.List;
 
-class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
+public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelfAdapter.OpenedBookshelfViewHolder> {
     private final Context mContext;
     private List<Book> mListBook;
 
-    public BookAdapter2(Context mContext) {
+    public OpenedBookshelfAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -40,13 +42,13 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
 
     @NonNull
     @Override
-    public BookViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OpenedBookshelfViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_book_view, parent, false);
-        return new BookViewHolder2(view);
+        return new OpenedBookshelfViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookViewHolder2 holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull OpenedBookshelfViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Book book = mListBook.get(position);
         if (book == null)
             return;
@@ -69,18 +71,20 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
             @Override
             public boolean onLongClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_for_books_in_opened_bookshelf, popupMenu.getMenu());
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.read:
+                            case R.id.read_for_books_in_opened_bookshelf:
                                 onClickOpenBook(book);
                                 break;
-                            case R.id.delete:
-                                removeItem(position, view);
+                            case R.id.remove_from_bookshelf_for_books_in_opened_bookshelf:
+                                removeBookFromBookshelf(position);
                                 break;
+                            case R.id.remove_from_library_for_books_in_opened_bookshelf:
+                                removeBookFromLibrary(position);
                         }
                         return false;
                     }
@@ -90,18 +94,26 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
         });
     }
 
-    private void removeItem(int position, View view) {
-        Book tempBook = mListBook.get(position);
-        int id = tempBook.getId();
+    private void removeBookFromLibrary(int position) {
+        int id = mListBook.get(position).getId();
 
         mListBook.remove(position);
 
+        HomeFragment.removeBookFromHomeFragment(id);
+        BookshelfFragment.removeBookFromAllBookshelf(id);
+
+        notifyDataSetChanged();
+    }
+
+    private void removeBookFromBookshelf(int position) {
+        mListBook.remove(position);
+//        notifyDataSetChanged();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mListBook.size());
     }
 
     private void onClickOpenBook(Book book) {
-        Intent intent = new Intent(mContext, PDFOpener.class);
+        Intent intent = new Intent(mContext, PDFOpenerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("book_need_to_be_opened", book);
         intent.putExtras(bundle);
@@ -115,12 +127,12 @@ class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder2>{
         return 0;
     }
 
-    public static class BookViewHolder2 extends RecyclerView.ViewHolder {
+    public static class OpenedBookshelfViewHolder extends RecyclerView.ViewHolder {
         private CardView layoutItems;
         private ImageView imgCover;
         private TextView tvName;
 
-        public BookViewHolder2(@NonNull View itemView) {
+        public OpenedBookshelfViewHolder(@NonNull View itemView) {
             super(itemView);
 
             layoutItems = itemView.findViewById(R.id.layoutItem);

@@ -15,14 +15,12 @@
 
     <android.widget.Button
         android:id="@+id/btn_addBook"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/btn_background"
-        android:text="@string/add"
-        android:textSize="20sp" />
+        android:background="@drawable/icon_btn_add" />
 
     <TextView
         android:id="@+id/txt_pathShow"

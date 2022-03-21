@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".activities.AddBookToBookShelf">
+    tools:context=".activities.AddBookToBookShelfActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_add_book_to_bookshelf"

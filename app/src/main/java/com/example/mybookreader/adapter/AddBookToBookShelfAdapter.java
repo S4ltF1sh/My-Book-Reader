@@ -6,12 +6,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybookreader.activities.AddBookToBookShelf;
+import com.example.mybookreader.activities.AddBookToBookShelfActivity;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.fragments.HomeFragment;
@@ -47,7 +48,7 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
 
         holder.tvName.setText(bookShelf.getName());
 
-        holder.tvName.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickAddBookToBookShelf(position);
@@ -57,7 +58,7 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
 
     private void onClickAddBookToBookShelf(int position) {
         List<Book> tmpBookshelf = BookshelfFragment.mListBookShelf.get(position).getListBook();
-        tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelf.positionOfBookNeedToAddToBookshelf));
+        tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelfActivity.positionOfBookNeedToAddToBookshelf));
         BookshelfFragment.mListBookShelf.get(position).setListBook(tmpBookshelf);
         ((Activity) mContext).finish();
     }
@@ -71,10 +72,12 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
 
     public static class AddBookToBookShelfViewHolder extends RecyclerView.ViewHolder {
         private TextView tvName;
+        private RelativeLayout layout;
 
         public AddBookToBookShelfViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name_of_bookshelf2);
+            layout = itemView.findViewById(R.id.layoutBookShelfView2);
         }
     }
 }

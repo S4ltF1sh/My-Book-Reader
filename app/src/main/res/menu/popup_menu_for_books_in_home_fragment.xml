@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/read"
+        android:id="@+id/read_for_book_in_home_fragment"
         android:title="Read"
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/add_to_bookshelf"
+        android:id="@+id/add_to_bookshelf_for_book_in_home_fragment"
         android:title="Add to bookshelf"
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/delete"
-        android:title="Delete"
+        android:id="@+id/remove_for_book_in_home_fragment"
+        android:title="Remove from library"
         app:showAsAction="never"/>
 </menu>

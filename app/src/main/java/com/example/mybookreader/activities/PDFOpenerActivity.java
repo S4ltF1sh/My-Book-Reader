@@ -15,7 +15,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
 
-public class PDFOpener extends AppCompatActivity {
+public class PDFOpenerActivity extends AppCompatActivity {
 
     PDFView pdfView;
     Book bookNeedToBeOpened;

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -13,7 +12,7 @@ import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.BookShelf;
 
-public class AddBookShelf extends AppCompatActivity {
+public class AddBookShelfActivity extends AppCompatActivity {
 
     EditText mBookShelfName;
     Button mBtnAddBookShelf;
@@ -45,7 +44,7 @@ public class AddBookShelf extends AppCompatActivity {
     }
 
     private void onClickAddBookShelf(String bookshelfName) {
-        Intent intent = new Intent(AddBookShelf.this, BookshelfFragment.class);
+        Intent intent = new Intent(AddBookShelfActivity.this, BookshelfFragment.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("new_bookshelf", new BookShelf(bookshelfName));
         intent.putExtras(bundle);
