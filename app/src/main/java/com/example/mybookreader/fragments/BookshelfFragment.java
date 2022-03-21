@@ -204,4 +204,17 @@ public class BookshelfFragment extends Fragment {
         //mBookShelfViewAdapter.setData(mListBookShelf);
     }
 
+    public static void saveCurrentPageOfABookInAllBookshelf(int id, int currentPage) {
+        for (int i = 0; i < mListBookShelf.size(); i++) {
+            List<Book> tmpListBook = mListBookShelf.get(i).getListBook();
+            for (int j = 0; j < tmpListBook.size(); j++) {
+                if (id == tmpListBook.get(j).getId()) {
+                    tmpListBook.get(j).setSavedPage(currentPage);
+                    mListBookShelf.get(i).setListBook(tmpListBook);
+                    mBookShelfViewAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
+    }
 }

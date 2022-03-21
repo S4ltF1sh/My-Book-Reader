@@ -287,4 +287,14 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
+    public static void saveCurrentPageOfBook(int id, int currentPage){
+        for (int i = 0; i < HomeFragment.listBook.size(); i++) {
+            if (HomeFragment.listBook.get(i).getId() == id) {
+                HomeFragment.listBook.get(i).setSavedPage(currentPage);
+                mAllBookAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
 }

@@ -3,15 +3,18 @@ package com.example.mybookreader.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Window;
 
 import com.example.mybookreader.R;
+import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnDrawListener;
 
 import java.io.File;
 
@@ -38,12 +41,11 @@ public class PDFOpenerActivity extends AppCompatActivity {
                 .enableSwipe(true) // allows to block changing pages using swipe
                 .swipeHorizontal(true)
                 .enableDoubletap(true)
+                .autoSpacing(true)
                 .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-                .password(null)
-                .scrollHandle(null)
                 .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                 // spacing between pages in dp. To define spacing color, set view background
-                .spacing(0)
+                //.spacing(5)
                 .load();
 
         setProgressBarIndeterminate(true);
@@ -51,12 +53,8 @@ public class PDFOpenerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        for (int i = 0; i < HomeFragment.listBook.size(); i++) {
-            if (HomeFragment.listBook.get(i).getId() == bookNeedToBeOpened.getId()) {
-                HomeFragment.listBook.get(i).setSavedPage(pdfView.getCurrentPage());
-                break;
-            }
-        }
+        HomeFragment.saveCurrentPageOfBook(bookNeedToBeOpened.getId(), pdfView.getCurrentPage());
+        BookshelfFragment.saveCurrentPageOfABookInAllBookshelf(bookNeedToBeOpened.getId(), pdfView.getCurrentPage());
         super.onBackPressed();
     }
 }
