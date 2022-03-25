@@ -1,14 +1,24 @@
 package com.example.mybookreader.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.mybookreader.database.Converters;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "bookshelf")
+@TypeConverters({Converters.class})
 public class BookShelf implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private List<Book> listBook;
     private String name;
-    private int id = 0;
-    public static int idNum = 0;
+
+    //public static int idNum = 0;
 
     public BookShelf() {
     }
@@ -16,15 +26,15 @@ public class BookShelf implements Serializable {
     public BookShelf(String name) {
         this.name = name;
         this.listBook = new ArrayList<>();
-        idNum++;
-        id = idNum;
+//        idNum++;
+//        id = idNum;
     }
 
     public BookShelf(List<Book> listBook, String name) {
         this.listBook = listBook;
         this.name = name;
-        idNum++;
-        id = idNum;
+//        idNum++;
+//        id = idNum;
     }
 
     public List<Book> getListBook() {

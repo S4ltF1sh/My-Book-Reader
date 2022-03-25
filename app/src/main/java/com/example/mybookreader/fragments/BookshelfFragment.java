@@ -18,10 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.AddBookShelfActivity;
+import com.example.mybookreader.activities.MainScreenActivity;
 import com.example.mybookreader.adapter.BookShelfViewAdapter;
+import com.example.mybookreader.database.BookDatabase;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.model.BookShelf;
 
@@ -53,13 +57,18 @@ public class BookshelfFragment extends Fragment {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent intent = result.getData();
                         BookShelf bookShelf = (BookShelf) intent.getExtras().get("new_bookshelf");
-                        mListBookShelf.add(bookShelf);
-                        mBookShelfViewAdapter.setData(mListBookShelf);
-                        try {
-                            writeDataIntoFile();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+//                        mListBookShelf.add(bookShelf);
+//                        mBookShelfViewAdapter.setData(mListBookShelf);
+
+                        if (isBookshelfExisted(bookShelf)) {
+                            Toast.makeText(getActivity(), "Đã tồn tại giá sách " + bookShelf.getName() + " trong thư viện!", Toast.LENGTH_SHORT).show();
+                            return;
                         }
+
+                        BookshelfDatabase.getInstance(getActivity()).bookshelfDAO().insertBookshelf(bookShelf);
+                        Toast.makeText(getActivity(), "Đã thêm 1 giá sách vào thư viện", Toast.LENGTH_SHORT).show();
+
+                        loadData();
                     }
                 }
             }
@@ -82,7 +91,7 @@ public class BookshelfFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if (!isCalled) {
-            readDataFromFile();
+            loadData();
             isCalled = true;
         }
 
@@ -101,7 +110,9 @@ public class BookshelfFragment extends Fragment {
 //        rcvBookShelf.setLayoutManager(linearLayoutManager);
         mBookShelfViewAdapter.setData(mListBookShelf);
         rcvBookShelf.setAdapter(mBookShelfViewAdapter);
-        rcvBookShelf.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getContext().getResources().getDrawable(R.drawable.custome_divider_item_decoration));
+        rcvBookShelf.addItemDecoration(dividerItemDecoration);
 
         return mView;
     }
@@ -113,108 +124,33 @@ public class BookshelfFragment extends Fragment {
 
     @Override
     public void onStop() {
-        try {
-            writeDataIntoFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         Log.v("info: ", "onStop() called");
         super.onStop();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+        ((MainScreenActivity) getActivity()).getSupportActionBar()
+                .setTitle(String.valueOf(mListBookShelf.size()) + " giá sách");
+
         if (mBookShelfViewAdapter != null) {
             mBookShelfViewAdapter.notifyDataSetChanged();
         }
     }
 
-    public void readDataFromFile() {
-        FileInputStream fis = null;
-        ObjectInputStream objin = null;
-        mListBookShelf.clear();
-
+    public void loadData() {
         try {
-            fis = getActivity().openFileInput("com\\example\\mybookreader\\data\\BOOK_SHELF_DATA.txt");
-            objin = new ObjectInputStream(fis);
-            mListBookShelf = (List<BookShelf>) objin.readObject();
-
+            mListBookShelf = BookshelfDatabase.getInstance(getActivity()).bookshelfDAO().getListBookshelf();
+            mBookShelfViewAdapter.setData(mListBookShelf);
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (objin != null) {
-                    objin.close();
-                }
-            } catch (Exception e) {
-            }
-        }
 
-        for (int i = 1; i <= mListBookShelf.size(); i++) {
-            BookShelf temp = mListBookShelf.get(i - 1);
-            temp.setId(i);
-            mListBookShelf.set(i - 1, temp);
-        }
-        Book.idnum = mListBookShelf.size();
-    }
-
-    public void writeDataIntoFile() throws IOException {
-        FileOutputStream fos = null;
-        ObjectOutputStream objout = null;
-
-        try {
-            fos = this.getActivity().openFileOutput("com\\example\\mybookreader\\data\\BOOK_SHELF_DATA.txt", getActivity().MODE_PRIVATE);
-            objout = new ObjectOutputStream(fos);
-            objout.writeObject(mListBookShelf);
-            objout.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-                if (objout != null) {
-                    objout.close();
-                }
-            } catch (Exception e) {
-
-            }
         }
     }
 
-    public static void removeBookFromAllBookshelf(int id) {
-        for (int i = 0; i < mListBookShelf.size(); i++) {
-            List<Book> tmpListBook = mListBookShelf.get(i).getListBook();
-            for (int j = 0; j < tmpListBook.size(); j++) {
-                if (id == tmpListBook.get(j).getId()) {
-                    tmpListBook.remove(j);
-                    mListBookShelf.get(i).setListBook(tmpListBook);
-                    mBookShelfViewAdapter.notifyDataSetChanged();
-                    break;
-                }
-            }
-        }
-        //mBookShelfViewAdapter.setData(mListBookShelf);
-    }
-
-    public static void saveCurrentPageOfABookInAllBookshelf(int id, int currentPage) {
-        for (int i = 0; i < mListBookShelf.size(); i++) {
-            List<Book> tmpListBook = mListBookShelf.get(i).getListBook();
-            for (int j = 0; j < tmpListBook.size(); j++) {
-                if (id == tmpListBook.get(j).getId()) {
-                    tmpListBook.get(j).setSavedPage(currentPage);
-                    mListBookShelf.get(i).setListBook(tmpListBook);
-                    mBookShelfViewAdapter.notifyDataSetChanged();
-                    break;
-                }
-            }
-        }
+    public boolean isBookshelfExisted(BookShelf bookShelf) {
+        List<BookShelf> list = BookshelfDatabase.getInstance(getActivity()).bookshelfDAO().checkBookshelf(bookShelf.getName());
+        return list != null && !list.isEmpty();
     }
 }

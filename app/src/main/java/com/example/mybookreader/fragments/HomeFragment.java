@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+//import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -25,19 +25,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.AddBookActivity;
 import com.example.mybookreader.activities.MainScreenActivity;
 import com.example.mybookreader.adapter.AllBookAdapter;
+import com.example.mybookreader.database.BookDatabase;
 import com.example.mybookreader.model.Book;
-import com.google.android.material.tabs.TabLayout;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +44,6 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     View mView;
-    private TabLayout mTabLayout;
-
     public static List<Book> listBook = new ArrayList<>();
     private static boolean isCalled = false;
 
@@ -64,14 +58,17 @@ public class HomeFragment extends Fragment {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent intent = result.getData();
-                        Book book = (Book) intent.getExtras().get("new_book");
-                        listBook.add(book);
-                        mAllBookAdapter.setData(listBook);
-                        try {
-                            writeDataIntoFile();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        Book book;
+                        if (intent != null) {
+                            book = (Book) intent.getExtras().get("new_book");
+                        } else {
+                            return;
                         }
+
+                        BookDatabase.getInstance(getActivity()).bookDAO().insertBook(book);
+                        Toast.makeText(getActivity(), "Đã thêm 1 cuốn sách vào thư viện", Toast.LENGTH_SHORT).show();
+
+                        loadData();
                     }
                 }
             }
@@ -87,23 +84,23 @@ public class HomeFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
 
-        ((MainScreenActivity) getActivity()).Hello();
+        //((MainScreenActivity) getActivity()).Hello();
 
         if (!isCalled) {
-            readDataFromFile();
+            loadData();
             isCalled = true;
         }
 
         //list book view by RecyclerView
         rcvBook = mView.findViewById(R.id.rcv_book);
         mAllBookAdapter = new AllBookAdapter(getContext());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        rcvBook.setLayoutManager(gridLayoutManager);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+//        rcvBook.setLayoutManager(gridLayoutManager);
         mAllBookAdapter.setData(listBook);
         rcvBook.setAdapter(mAllBookAdapter);
 
         //add new book
-        Button btn_addBook = (Button) mView.findViewById(R.id.btn_addBook);
+        Button btn_addBook = mView.findViewById(R.id.btn_addBook);
         btn_addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +108,7 @@ public class HomeFragment extends Fragment {
                 mActivityResultLauncher.launch(intent);
             }
         });
+
         return mView;
     }
 
@@ -121,18 +119,15 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStop() {
-        try {
-            writeDataIntoFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         super.onStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        ((MainScreenActivity) getActivity()).getSupportActionBar()
+                .setTitle(String.valueOf(listBook.size()) + " cuốn");
 
         if (mAllBookAdapter != null) {
             mAllBookAdapter.setData(listBook);
@@ -187,114 +182,12 @@ public class HomeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void readDataFromFile() {
-        FileInputStream fis = null;
-        ObjectInputStream objin = null;
-        listBook.clear();
-
+    public void loadData() {
         try {
-            fis = getActivity().openFileInput("com\\example\\mybookreader\\data\\DATA.txt");
-            objin = new ObjectInputStream(fis);
-            listBook = (List<Book>) objin.readObject();
-
+            listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBook();
+            mAllBookAdapter.setData(listBook);
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (objin != null) {
-                    objin.close();
-                }
-            } catch (Exception e) {
-            }
-        }
 
-        try {
-            fis = getActivity().openFileInput("com\\example\\mybookreader\\data\\AUTO_INCREASE_BOOK_ID_DATA.txt");
-            objin = new ObjectInputStream(fis);
-            Book.idnum = (int) objin.readObject();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (objin != null) {
-                    objin.close();
-                }
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    public void writeDataIntoFile() throws IOException {
-        FileOutputStream fos = null;
-        ObjectOutputStream objout = null;
-
-        try {
-            fos = this.getActivity().openFileOutput("com\\example\\mybookreader\\data\\DATA.txt", getActivity().MODE_PRIVATE);
-            objout = new ObjectOutputStream(fos);
-            objout.writeObject(listBook);
-            objout.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-                if (objout != null) {
-                    objout.close();
-                }
-            } catch (Exception e) {
-
-            }
-        }
-
-        try {
-            fos = this.getActivity().openFileOutput("com\\example\\mybookreader\\data\\AUTO_INCREASE_BOOK_ID_DATA.txt", getActivity().MODE_PRIVATE);
-            objout = new ObjectOutputStream(fos);
-            objout.writeObject(Book.idnum);
-            objout.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-                if (objout != null) {
-                    objout.close();
-                }
-            } catch (Exception e) {
-
-            }
-        }
-    }
-
-    public static void removeBookFromHomeFragment(int id) {
-        for (int i = 0; i < listBook.size(); i++) {
-            if (id == listBook.get(i).getId()) {
-                listBook.remove(i);
-                //mAllBookAdapter.setData(listBook);
-                mAllBookAdapter.notifyItemRemoved(i);
-                mAllBookAdapter.notifyItemRangeChanged(i, listBook.size());
-                break;
-            }
-        }
-    }
-
-    public static void saveCurrentPageOfBook(int id, int currentPage){
-        for (int i = 0; i < HomeFragment.listBook.size(); i++) {
-            if (HomeFragment.listBook.get(i).getId() == id) {
-                HomeFragment.listBook.get(i).setSavedPage(currentPage);
-                mAllBookAdapter.notifyDataSetChanged();
-                break;
-            }
         }
     }
 }

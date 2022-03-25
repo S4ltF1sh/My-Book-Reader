@@ -1,7 +1,9 @@
 package com.example.mybookreader.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,17 +17,21 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybookreader.activities.AddBookToBookShelfActivity;
+import com.example.mybookreader.database.BookDatabase;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.activities.PDFOpenerActivity;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
+import com.example.mybookreader.model.BookShelf;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,6 +70,8 @@ public class AllBookAdapter extends RecyclerView.Adapter<AllBookAdapter.AllBookV
             holder.imgCover.setImageBitmap(myBitmap);
         }
         holder.tvName.setText(book.getName());
+        //holder.tvAuthor.setText(book.getAuthor());
+        holder.tvAuthor.setText(String.valueOf(book.getId()));
 
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,14 +117,44 @@ public class AllBookAdapter extends RecyclerView.Adapter<AllBookAdapter.AllBookV
     }
 
     private void removeBookFromLibrary(int position, View view) {
-        int id = mListBook.get(position).getId();
+        new AlertDialog.Builder(mContext)
+                .setTitle("Có phải bạn muốn xóa khỏi thư viện?")
+                .setMessage("Cuốn sách này sẽ bị xóa khỏi toàn bộ những giá sách cũng như màn hình chính.")
+                .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int id = mListBook.get(position).getId();
+                        mListBook.remove(position);
 
-        mListBook.remove(position);
+                        for (int j = 0; j < HomeFragment.listBook.size(); j++) {
+                            if (id == HomeFragment.listBook.get(j).getId()) {
+                                BookDatabase.getInstance(mContext).bookDAO().deleteBook(HomeFragment.listBook.get(j));
+                                HomeFragment.listBook = BookDatabase.getInstance(mContext).bookDAO().getListBook();
+                                notifyItemRemoved(j);
+                                notifyItemRangeChanged(j, mListBook.size());
+                                break;
+                            }
+                        }
 
-        HomeFragment.removeBookFromHomeFragment(id);
-        BookshelfFragment.removeBookFromAllBookshelf(id);
+                        for (int j = 0; j < BookshelfFragment.mListBookShelf.size(); j++) {
+                            List<Book> tmpListBook = BookshelfFragment.mListBookShelf.get(j).getListBook();
+                            for (int k = 0; k < tmpListBook.size(); k++) {
+                                if (id == tmpListBook.get(k).getId()) {
+                                    tmpListBook.remove(k);
+                                    BookshelfFragment.mListBookShelf.get(j).setListBook(tmpListBook);
+                                    BookshelfDatabase.getInstance(mContext).bookshelfDAO().updateBookshelf(BookshelfFragment.mListBookShelf.get(j));
+                                    break;
+                                }
+                            }
+                        }
 
-        notifyDataSetChanged();
+//                        setData(HomeFragment.listBook);
+
+                        Toast.makeText(mContext, "Đã xóa 1 cuốn sách ra khỏi thư viện!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 
     private void onClickOpenBook(Book book) {
@@ -137,7 +175,7 @@ public class AllBookAdapter extends RecyclerView.Adapter<AllBookAdapter.AllBookV
     public static class AllBookViewHolder extends RecyclerView.ViewHolder {
         private CardView layoutItems;
         private ImageView imgCover;
-        private TextView tvName;
+        private TextView tvName, tvAuthor;
 
         public AllBookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,7 +183,7 @@ public class AllBookAdapter extends RecyclerView.Adapter<AllBookAdapter.AllBookV
             layoutItems = itemView.findViewById(R.id.layoutItem);
             imgCover = itemView.findViewById(R.id.im_cover);
             tvName = itemView.findViewById(R.id.tv_name);
-
+            tvAuthor = itemView.findViewById(R.id.tv_author);
         }
     }
 

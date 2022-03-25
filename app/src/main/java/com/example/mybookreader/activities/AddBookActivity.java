@@ -22,10 +22,10 @@ import com.example.mybookreader.model.Book;
 public class AddBookActivity extends AppCompatActivity {
 
     TextView mUriCover, mUriFile;
-    EditText mTitle, Author;
+    EditText mTitle, mAuthor;
     Button mLinkCover, mLinkFile, mAdd;
 
-    String title, uriFile, uriCover;
+    String title, author, uriFile, uriCover;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -69,7 +69,7 @@ public class AddBookActivity extends AppCompatActivity {
         mUriFile = findViewById(R.id.tv_uriPDF);
 
         mTitle = findViewById(R.id.edt_title);
-        Author = findViewById(R.id.edt_author);
+        mAuthor = findViewById(R.id.edt_author);
 
         mLinkCover = findViewById(R.id.btn_addCover);
         mLinkFile = findViewById(R.id.btn_addFile);
@@ -98,12 +98,13 @@ public class AddBookActivity extends AppCompatActivity {
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTitle == null || mTitle.getText().equals("") || uriFile == null || uriCover == null)
+                if (mTitle.getText().toString().equals("") || mTitle.getText().equals("") || uriFile == null || uriCover == null)
                     return;
                 title = String.valueOf(mTitle.getText());
+                author = String.valueOf(mAuthor.getText());
                 Intent intent = new Intent(AddBookActivity.this, MainScreenActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("new_book", new Book(title, uriCover, uriFile));
+                bundle.putSerializable("new_book", new Book(title, author, uriCover, uriFile));
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();

@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.view.Window;
 
 import com.example.mybookreader.R;
+import com.example.mybookreader.database.BookDatabase;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
@@ -17,6 +19,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnDrawListener;
 
 import java.io.File;
+import java.util.List;
 
 public class PDFOpenerActivity extends AppCompatActivity {
 
@@ -53,8 +56,25 @@ public class PDFOpenerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        HomeFragment.saveCurrentPageOfBook(bookNeedToBeOpened.getId(), pdfView.getCurrentPage());
-        BookshelfFragment.saveCurrentPageOfABookInAllBookshelf(bookNeedToBeOpened.getId(), pdfView.getCurrentPage());
+        int id = bookNeedToBeOpened.getId(), currentPage = pdfView.getCurrentPage();
+        for (int i = 0; i < HomeFragment.listBook.size(); i++) {
+            if (HomeFragment.listBook.get(i).getId() == id) {
+                HomeFragment.listBook.get(i).setSavedPage(currentPage);
+                BookDatabase.getInstance(this).bookDAO().updateBook(HomeFragment.listBook.get(i));
+                break;
+            }
+        }
+        for (int i = 0; i < BookshelfFragment.mListBookShelf.size(); i++) {
+            List<Book> tmpListBook = BookshelfFragment.mListBookShelf.get(i).getListBook();
+            for (int j = 0; j < tmpListBook.size(); j++) {
+                if (id == tmpListBook.get(j).getId()) {
+                    tmpListBook.get(j).setSavedPage(currentPage);
+                    BookshelfFragment.mListBookShelf.get(i).setListBook(tmpListBook);
+                    BookshelfDatabase.getInstance(this).bookshelfDAO().updateBookshelf(BookshelfFragment.mListBookShelf.get(i));
+                    break;
+                }
+            }
+        }
         super.onBackPressed();
     }
 }

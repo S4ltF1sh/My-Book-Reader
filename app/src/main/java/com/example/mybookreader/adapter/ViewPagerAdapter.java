@@ -38,10 +38,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position) {
             case 0:
-                title = "Home";
+                title = "Sách của bạn";
                 break;
             case 1:
-                title = "BookShelf";
+                title = "Thư viện";
                 break;
         }
         return title;

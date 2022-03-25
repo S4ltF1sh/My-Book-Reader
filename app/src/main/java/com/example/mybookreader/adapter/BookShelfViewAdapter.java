@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybookreader.activities.OpenedBookshelfActivity;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.BookShelf;
@@ -69,7 +71,7 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.remove_for_bookshelfs_in_bookshelf_view:
-                                removeItem(position, view);
+                                removeItem(position);
                                 break;
                         }
                         return false;
@@ -80,16 +82,18 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
         });
     }
 
-    private void removeItem(int position, View view) {
-        BookshelfFragment.mListBookShelf.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, BookshelfFragment.mListBookShelf.size());
+    private void removeItem(int position) {
+        BookshelfDatabase.getInstance(mContext).bookshelfDAO().deleteBookshelf(BookshelfFragment.mListBookShelf.get(position));
+        BookshelfFragment.mListBookShelf = BookshelfDatabase.getInstance(mContext).bookshelfDAO().getListBookshelf();
+        notifyDataSetChanged();
+
+        Toast.makeText(mContext, "Đã xóa 1 giá sách khỏi thư viện!", Toast.LENGTH_SHORT).show();
     }
 
     private void onClickOpenBookShelf(int position) {
         Intent intent = new Intent(mContext, OpenedBookshelfActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("position", position);
+        bundle.putSerializable("position_of_bookshelf", position);
         intent.putExtras(bundle);
         mContext.startActivity(intent);
     }

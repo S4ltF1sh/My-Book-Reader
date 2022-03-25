@@ -7,13 +7,13 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    >
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/gray">
 
         <ImageView
             android:id="@+id/im_cover"
@@ -24,13 +24,23 @@
             android:contentDescription="cover of book" />
 
         <TextView
+            style="@style/TextAppearance.AppCompat.Title"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/black"
-            android:textSize="12pt"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             android:padding="6dp"
             android:text="Name of this book"/>
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/gray_dark_mode_for_text"
+            android:text="author's name"
+            android:textSize="12sp"
+            android:padding="6dp"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

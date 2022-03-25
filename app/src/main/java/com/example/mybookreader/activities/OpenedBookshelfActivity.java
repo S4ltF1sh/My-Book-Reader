@@ -28,11 +28,11 @@ public class OpenedBookshelfActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_shelf);
+        setContentView(R.layout.activity_opened_book_shelf);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
-        position = bundle.getInt("position");
+        position = bundle.getInt("position_of_bookshelf");
 
         title = BookshelfFragment.mListBookShelf.get(position).getName();
 
@@ -44,12 +44,16 @@ public class OpenedBookshelfActivity extends AppCompatActivity {
         mBookAdapter.setData(BookshelfFragment.mListBookShelf.get(position).getListBook());
         rcvBook.setAdapter(mBookAdapter);
 
-        getSupportActionBar().setTitle(title + " / " + String.valueOf(mBookAdapter.getItemCount()) + " books");
+        getSupportActionBar().setTitle(title + " / " + String.valueOf(mBookAdapter.getItemCount()) + " cuốn");
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    public int getPosition(){
+        return position;
     }
 }

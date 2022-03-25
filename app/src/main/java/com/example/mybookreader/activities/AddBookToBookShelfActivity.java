@@ -13,9 +13,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mybookreader.adapter.AddBookToBookShelfAdapter;
 import com.example.mybookreader.R;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
@@ -43,7 +45,11 @@ public class AddBookToBookShelfActivity extends AppCompatActivity {
                         List<Book> tmpBookshelf = new ArrayList<>();
                         tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelfActivity.positionOfBookNeedToAddToBookshelf));
                         bookShelf.setListBook(tmpBookshelf);
-                        BookshelfFragment.mListBookShelf.add(bookShelf);
+//                        BookshelfFragment.mListBookShelf.add(bookShelf);
+                        BookshelfDatabase.getInstance(AddBookToBookShelfActivity.this).bookshelfDAO().insertBookshelf(bookShelf);
+                        Toast.makeText(AddBookToBookShelfActivity.this, "Đã thêm 1 giá sách vào thư viện", Toast.LENGTH_SHORT).show();
+
+                        BookshelfFragment.mListBookShelf = BookshelfDatabase.getInstance(AddBookToBookShelfActivity.this).bookshelfDAO().getListBookshelf();
                         finish();
                     }
                 }

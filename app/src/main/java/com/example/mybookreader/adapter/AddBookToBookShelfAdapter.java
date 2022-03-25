@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybookreader.activities.AddBookToBookShelfActivity;
+import com.example.mybookreader.database.BookshelfDatabase;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.fragments.HomeFragment;
@@ -60,6 +61,8 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
         List<Book> tmpBookshelf = BookshelfFragment.mListBookShelf.get(position).getListBook();
         tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelfActivity.positionOfBookNeedToAddToBookshelf));
         BookshelfFragment.mListBookShelf.get(position).setListBook(tmpBookshelf);
+
+        BookshelfDatabase.getInstance(mContext).bookshelfDAO().updateBookshelf(BookshelfFragment.mListBookShelf.get(position));
         ((Activity) mContext).finish();
     }
 
