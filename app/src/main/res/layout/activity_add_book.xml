@@ -9,7 +9,7 @@
     tools:context=".activities.AddBookActivity"
     tools:ignore="MissingConstraints">
 
-    //Author:
+    //Title and Author
 
     <LinearLayout
         android:id="@+id/lnl_enterText"
@@ -22,109 +22,139 @@
             android:id="@+id/edt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title" />
+            android:layout_marginTop="16dp"
+            android:hint="Tên sách"/>
 
         <EditText
             android:id="@+id/edt_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Author" />
+            android:hint="Tác giả" />
     </LinearLayout>
 
-    //Cover:
+    //Cover and File:
 
     <LinearLayout
-        android:id="@+id/lnl_cover"
+        android:id="@+id/lnl_cover_and_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/lnl_enterText">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        //Cover:
+
+        <LinearLayout
+            android:id="@+id/lnl_cover"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:paddingRight="2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_addCover"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/custom_upload_background"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/ic_image_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_image_24"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingTop="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_image_24"
+                    android:paddingTop="5dp"
+                    android:text="COVER"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
-                android:id="@+id/tv_cover"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_uriCover"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Cover:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:text="uri"
+                android:textColor="#FF5722"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_addCover"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="LINK" />
-        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_uriCover"
-            android:layout_width="wrap_content"
+        //File:
+
+        <LinearLayout
+            android:id="@+id/lnl_file"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="uri"
-            android:textColor="#FF5722"
-            android:textSize="12sp" />
-    </LinearLayout>
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:paddingLeft="2dp">
 
-    //File:
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_addFile"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/custom_upload_background"
+                android:clickable="true">
 
-    <LinearLayout
-        android:id="@+id/lnl_file"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/lnl_cover">
+                <ImageView
+                    android:id="@+id/ic_pdf_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_picture_as_pdf_24"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingTop="16dp"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_pdf_24"
+                    android:paddingTop="5dp"
+                    android:text="PDF FILE"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_file"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_uriPDF"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="File:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:text="uri"
+                android:textColor="#FF5722"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_addFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="LINK" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_uriPDF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="uri"
-            android:textColor="#FF5722"
-            android:textSize="12sp" />
     </LinearLayout>
+
 
     //Btn ADD
+
     <Button
         android:id="@+id/f_btn_addBook"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        android:text="ADD"
-        app:layout_constraintTop_toBottomOf="@+id/lnl_file"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:text="Thêm sách mới"
+        android:background="@drawable/btn_background"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnl_cover_and_file" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

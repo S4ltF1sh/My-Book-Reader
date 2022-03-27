@@ -17,20 +17,33 @@
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.144" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/action_bar_background.xml" value="0.1705" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/btn_background.xml" value="0.166" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/button_normal.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/button_pressed.xml" value="0.1705" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/custom_ripple.xml" value="0.144" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/custom_search_bar.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/custom_tab_selector.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/custom_upload_background.xml" value="0.1705" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/custome_divider_item_decoration.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/ic_baseline_book_24.xml" value="0.1705" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.1705" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/ic_launcher_background.xml" value="0.144" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/drawable/tab_background.xml" value="0.1705" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book.xml" value="0.264" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book_shelf.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_add_book_to_book_shelf.xml" value="0.176" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_book_shelf.xml" value="0.21927083333333333" />
-        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_main_screen.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_main_screen.xml" value="0.176" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/activity_opened_book_shelf.xml" value="0.1286231884057971" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/custom_action_bar.xml" value="0.264" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/custom_tab_bookshelf_view.xml" value="0.18464912280701753" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/custom_tab_home.xml" value="0.2" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/fragment_bookshelf.xml" value="0.21927083333333333" />
-        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/row_book_shelf_view.xml" value="0.1" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/row_book_shelf_view.xml" value="0.4" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/row_book_shelf_view2.xml" value="0.18981481481481483" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/layout/row_book_view.xml" value="0.264" />
+        <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18464912280701753" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/menu/main_menu.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/menu/popup_menu.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sanka/AndroidStudioProjects/MyBookReader_Test/app/src/main/res/menu/popup_menu2.xml" value="0.1816220880069025" />

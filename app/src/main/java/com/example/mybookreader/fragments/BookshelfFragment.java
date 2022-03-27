@@ -132,9 +132,6 @@ public class BookshelfFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((MainScreenActivity) getActivity()).getSupportActionBar()
-                .setTitle(String.valueOf(mListBookShelf.size()) + " giá sách");
-
         if (mBookShelfViewAdapter != null) {
             mBookShelfViewAdapter.notifyDataSetChanged();
         }

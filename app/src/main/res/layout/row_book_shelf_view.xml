@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutBookShelfView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:background="@drawable/custom_ripple"
-    android:clickable="true">
+    android:clickable="true"
+    tools:ignore="MissingConstraints">
 
     <TextView
         android:id="@+id/tv_name_of_bookshelf"
-        android:layout_width="369dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:text="Name of book"
-        android:textSize="16sp" />
-</RelativeLayout>
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_baseline_arrow_forward_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:scaleY="0.8"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

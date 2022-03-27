@@ -37,7 +37,7 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
     @NonNull
     @Override
     public AddBookToBookShelfViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_book_shelf_view2, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_book_to_bookshelf, parent, false);
         return new AddBookToBookShelfViewHolder(view);
     }
 
@@ -80,7 +80,7 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
         public AddBookToBookShelfViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name_of_bookshelf2);
-            layout = itemView.findViewById(R.id.layoutBookShelfView2);
+            layout = itemView.findViewById(R.id.layoutAddBookToBookshelf);
         }
     }
 }

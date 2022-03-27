@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mybookreader.R;
-import com.example.mybookreader.UriUtils;
+import com.example.mybookreader.utils.UriUtils;
 import com.example.mybookreader.model.Book;
 
 
@@ -23,7 +24,8 @@ public class AddBookActivity extends AppCompatActivity {
 
     TextView mUriCover, mUriFile;
     EditText mTitle, mAuthor;
-    Button mLinkCover, mLinkFile, mAdd;
+    Button mAdd;
+    ConstraintLayout mLinkCover, mLinkFile;
 
     String title, author, uriFile, uriCover;
 
@@ -71,8 +73,8 @@ public class AddBookActivity extends AppCompatActivity {
         mTitle = findViewById(R.id.edt_title);
         mAuthor = findViewById(R.id.edt_author);
 
-        mLinkCover = findViewById(R.id.btn_addCover);
-        mLinkFile = findViewById(R.id.btn_addFile);
+        mLinkCover = findViewById(R.id.ctl_addCover);
+        mLinkFile = findViewById(R.id.ctl_addFile);
         mAdd = findViewById(R.id.f_btn_addBook);
 
         mLinkCover.setOnClickListener(new View.OnClickListener() {

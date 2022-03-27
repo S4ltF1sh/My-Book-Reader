@@ -12,4 +12,15 @@
     <color name="gray_dark_mode">#3C4143</color>
     <color name="gray_dark_mode_for_text">#989898</color>
     <color name="pink">#ED6493</color>
+
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#0B0A24</color>
+    <color name="colorAccent">#FE0049</color>
+    <color name="bg_color">#36393f</color>
+    <color name="panel_color">#292b2f</color>
+    <color name="background">#0B0A24</color>
+    <color name="card_background">#11122A</color>
+
+    <color name="stepper">#1C1D34</color>
+    <color name="tint">#8D8E99</color>
 </resources>

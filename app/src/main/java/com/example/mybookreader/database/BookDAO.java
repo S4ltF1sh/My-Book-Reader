@@ -23,4 +23,8 @@ public interface BookDAO {
 
     @Delete
     void deleteBook(Book book);
+
+    //search LIKE:
+    @Query("SELECT * FROM book WHERE name LIKE '%' || :name || '%'")
+    List<Book> searchBook(String name);
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybookreader.activities.OpenedBookshelfActivity;
@@ -107,7 +108,7 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
 
     public static class BookShelfViewHolder extends RecyclerView.ViewHolder {
         private TextView tvName;
-        private RelativeLayout layoutItems;
+        private ConstraintLayout layoutItems;
 
         public BookShelfViewHolder(@NonNull View itemView) {
             super(itemView);

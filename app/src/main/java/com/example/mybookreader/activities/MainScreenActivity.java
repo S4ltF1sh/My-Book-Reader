@@ -1,13 +1,10 @@
 package com.example.mybookreader.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -24,6 +21,7 @@ public class MainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        getSupportActionBar().hide();
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //        Drawable d = getResources().getDrawable(R.drawable.action_bar_background);
 //        getSupportActionBar().setBackgroundDrawable(d);
@@ -38,6 +36,8 @@ public class MainScreenActivity extends AppCompatActivity {
         mViewPager.setAdapter(viewPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_book_24);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_library_books_24);
     }
 
     public void Hello() {
