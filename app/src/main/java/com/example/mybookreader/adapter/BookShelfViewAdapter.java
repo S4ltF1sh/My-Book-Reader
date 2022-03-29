@@ -53,6 +53,11 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
             return;
 
         holder.tvName.setText(bookShelf.getName());
+        String numberOfBooks = "Trống";
+        if (bookShelf.getListBook().size() > 0) {
+            numberOfBooks = String.valueOf(bookShelf.getListBook().size()) + " cuốn";
+        }
+        holder.tvNumberOfBooks.setText(numberOfBooks);
 
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,12 +112,13 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
     }
 
     public static class BookShelfViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvName;
+        private TextView tvName, tvNumberOfBooks;
         private ConstraintLayout layoutItems;
 
         public BookShelfViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name_of_bookshelf);
+            tvNumberOfBooks = itemView.findViewById(R.id.tv_number_of_books);
             layoutItems = itemView.findViewById(R.id.layoutBookShelfView);
         }
     }

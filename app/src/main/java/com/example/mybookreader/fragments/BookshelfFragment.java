@@ -2,6 +2,7 @@ package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.mybookreader.R;
+import com.example.mybookreader.activities.AddBookActivity;
 import com.example.mybookreader.activities.AddBookShelfActivity;
 import com.example.mybookreader.activities.MainScreenActivity;
 import com.example.mybookreader.adapter.BookShelfViewAdapter;
@@ -118,8 +120,14 @@ public class BookshelfFragment extends Fragment {
     }
 
     private void onClickAddNewBookShelf() {
-        Intent intent = new Intent(getContext(), AddBookShelfActivity.class);
-        mActivityResultLauncher.launch(intent);
+        ((MainScreenActivity) getActivity()).takePermission();
+
+        if (((MainScreenActivity) getActivity()).isPermissionGranted()) {
+            Intent intent = new Intent(getContext(), AddBookShelfActivity.class);
+            mActivityResultLauncher.launch(intent);
+        } else {
+            Toast.makeText(getContext(), "Không có quyền truy cập bộ nhớ", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -130,11 +138,11 @@ public class BookshelfFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
-
         if (mBookShelfViewAdapter != null) {
             mBookShelfViewAdapter.notifyDataSetChanged();
         }
+
+        super.onResume();
     }
 
     public void loadData() {

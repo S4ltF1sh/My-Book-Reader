@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.AddBookActivity;
+import com.example.mybookreader.activities.MainScreenActivity;
 import com.example.mybookreader.adapter.AllBookAdapter;
 import com.example.mybookreader.database.BookDatabase;
 import com.example.mybookreader.model.Book;
@@ -136,8 +137,14 @@ public class HomeFragment extends Fragment {
         btn_addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddBookActivity.class);
-                mActivityResultLauncher.launch(intent);
+                ((MainScreenActivity) getActivity()).takePermission();
+
+                if (((MainScreenActivity) getActivity()).isPermissionGranted()) {
+                    Intent intent = new Intent(getContext(), AddBookActivity.class);
+                    mActivityResultLauncher.launch(intent);
+                } else {
+                    Toast.makeText(getContext(), "Không có quyền truy cập bộ nhớ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

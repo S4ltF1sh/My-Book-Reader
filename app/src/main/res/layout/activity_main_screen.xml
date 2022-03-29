@@ -17,8 +17,10 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:tabSelectedTextColor="#ED6493"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="-2dp"
+        app:tabSelectedTextColor="@color/pink_200"
         app:tabMode="fixed"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"/>

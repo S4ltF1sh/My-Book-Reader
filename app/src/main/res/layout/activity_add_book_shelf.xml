@@ -6,17 +6,18 @@
     android:padding="16dp"
     tools:context=".activities.AddBookShelfActivity">
 
-
     <EditText
         android:id="@+id/edt_bookshelf_name"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="bookshelf's name"/>
+        android:hint="bookshelf's name" />
 
     <Button
         android:id="@+id/btn_addBookShelf"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_centerInParent="true"
-        android:text="ADD" />
+        android:layout_marginTop="200dp"
+        android:background="@drawable/btn_background"
+        android:text="Thêm giá sách mới" />
 </RelativeLayout>

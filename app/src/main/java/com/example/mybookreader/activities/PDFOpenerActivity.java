@@ -42,7 +42,7 @@ public class PDFOpenerActivity extends AppCompatActivity {
         pdfView.fromFile(new File(bookNeedToBeOpened.getPath()))
                 .defaultPage(bookNeedToBeOpened.getSavedPage())
                 .enableSwipe(true) // allows to block changing pages using swipe
-                .swipeHorizontal(true)
+                .swipeHorizontal(false)
                 .enableDoubletap(true)
                 .autoSpacing(true)
                 .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
