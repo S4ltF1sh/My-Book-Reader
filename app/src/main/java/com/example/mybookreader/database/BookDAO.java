@@ -27,4 +27,11 @@ public interface BookDAO {
     //search LIKE:
     @Query("SELECT * FROM book WHERE name LIKE '%' || :name || '%'")
     List<Book> searchBook(String name);
+
+    //get list book sorted by:
+    @Query("SELECT * FROM book ORDER BY name ASC")
+    List<Book> getListBookSortedByName();
+
+    @Query("SELECT * FROM book ORDER BY author ASC")
+    List<Book> getListBookSortedByNameOfAuthor();
 }

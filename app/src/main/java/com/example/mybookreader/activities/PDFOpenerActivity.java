@@ -17,6 +17,7 @@ import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnDrawListener;
+import com.github.barteksc.pdfviewer.util.FitPolicy;
 
 import java.io.File;
 import java.util.List;
@@ -43,8 +44,11 @@ public class PDFOpenerActivity extends AppCompatActivity {
                 .defaultPage(bookNeedToBeOpened.getSavedPage())
                 .enableSwipe(true) // allows to block changing pages using swipe
                 .swipeHorizontal(false)
-                .enableDoubletap(true)
-                .autoSpacing(true)
+                .enableDoubletap(false)
+                .spacing(0)
+                .enableAntialiasing(true)
+                .pageFling(true)
+                .pageFitPolicy(FitPolicy.WIDTH)
                 .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
                 .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                 // spacing between pages in dp. To define spacing color, set view background

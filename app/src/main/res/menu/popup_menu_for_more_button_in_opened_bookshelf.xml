@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/remove_this_bookshelf_from_library"
+        android:icon="@drawable/ic_baseline_remove_24"
+        android:title="Xóa giá sách này"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/rename_this_bookshelf"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Đổi tên giá sách này"
+        app:showAsAction="never" />
+</menu>

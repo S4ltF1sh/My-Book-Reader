@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.BookShelf;
+import com.example.mybookreader.utils.Util;
 
 public class AddBookShelfActivity extends AppCompatActivity {
 
@@ -26,9 +27,18 @@ public class AddBookShelfActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add New BookShelf");
 
-        mBookShelfName = (EditText) findViewById(R.id.edt_bookshelf_name);
-        mBtnAddBookShelf = (Button) findViewById(R.id.btn_addBookShelf);
+        setIdAndValue();
+        setListener();
+    }
 
+    private void setIdAndValue() {
+        mBookShelfName = (EditText) findViewById(R.id.edt_bookshelf_name);
+        mBookShelfName.requestFocus();
+        Util.showKeyBoard(this);
+        mBtnAddBookShelf = (Button) findViewById(R.id.btn_addBookShelf);
+    }
+
+    private void setListener() {
         mBtnAddBookShelf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +49,7 @@ public class AddBookShelfActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        Util.hideKeyboard(this);
         finish();
         return true;
     }
@@ -49,6 +60,7 @@ public class AddBookShelfActivity extends AppCompatActivity {
         bundle.putSerializable("new_bookshelf", new BookShelf(bookshelfName));
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
+        Util.hideKeyboard(this);
         finish();
     }
 }

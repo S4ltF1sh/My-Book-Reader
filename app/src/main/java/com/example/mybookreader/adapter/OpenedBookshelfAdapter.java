@@ -66,6 +66,7 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
             holder.imgCover.setImageBitmap(myBitmap);
         }
         holder.tvName.setText(book.getName());
+        holder.tvAuthor.setText(book.getAuthor());
 
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +173,7 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
     public static class OpenedBookshelfViewHolder extends RecyclerView.ViewHolder {
         private CardView layoutItems;
         private ImageView imgCover;
-        private TextView tvName;
+        private TextView tvName, tvAuthor;
 
         public OpenedBookshelfViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -180,7 +181,7 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
             layoutItems = itemView.findViewById(R.id.layoutItem);
             imgCover = itemView.findViewById(R.id.im_cover);
             tvName = itemView.findViewById(R.id.tv_name);
-
+            tvAuthor = itemView.findViewById(R.id.tv_author);
         }
     }
 }

@@ -13,4 +13,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/pink_200</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/gray_dark_mode_background_for_item</item>
+    </style>
 </resources>

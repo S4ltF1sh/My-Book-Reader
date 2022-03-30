@@ -70,8 +70,8 @@ public class AllBookAdapter extends RecyclerView.Adapter<AllBookAdapter.AllBookV
             holder.imgCover.setImageBitmap(myBitmap);
         }
         holder.tvName.setText(book.getName());
-        //holder.tvAuthor.setText(book.getAuthor());
-        holder.tvAuthor.setText(String.valueOf(book.getId()));
+        holder.tvAuthor.setText(book.getAuthor());
+        //holder.tvAuthor.setText(String.valueOf(book.getId()));
 
         holder.layoutItems.setOnClickListener(new View.OnClickListener() {
             @Override

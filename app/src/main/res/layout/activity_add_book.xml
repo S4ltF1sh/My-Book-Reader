@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Tên sách"/>
+            android:hint="Tên sách" />
 
         <EditText
             android:id="@+id/edt_author"
@@ -58,27 +58,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@drawable/custom_ripple1"
-                android:clickable="true">
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/ic_image_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
                     android:src="@drawable/ic_baseline_image_24"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:paddingTop="16dp"/>
+                    app:layout_constraintRight_toRightOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ic_image_24"
                     android:paddingTop="5dp"
                     android:text="COVER"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:textColor="@color/white"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_image_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -114,21 +115,21 @@
                     android:id="@+id/ic_pdf_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
                     android:src="@drawable/ic_baseline_picture_as_pdf_24"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:paddingTop="16dp"/>
+                    app:layout_constraintRight_toRightOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ic_pdf_24"
                     android:paddingTop="5dp"
                     android:text="PDF FILE"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:textColor="@color/white"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_pdf_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -145,13 +146,14 @@
 
 
     //Btn ADD
+
     <Button
         android:id="@+id/f_btn_addBook"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="200dp"
-        android:text="Thêm sách mới"
         android:background="@drawable/btn_background"
+        android:text="Thêm sách mới"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lnl_cover_and_file" />

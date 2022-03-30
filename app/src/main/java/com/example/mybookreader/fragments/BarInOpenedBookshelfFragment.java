@@ -3,6 +3,7 @@ package com.example.mybookreader.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,14 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.OpenedBookshelfActivity;
+import com.example.mybookreader.database.BookshelfDatabase;
 
 public class BarInOpenedBookshelfFragment extends Fragment {
     public final static int FRAGMENT_CODE = 182002;
@@ -88,7 +93,26 @@ public class BarInOpenedBookshelfFragment extends Fragment {
         imv_more_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_for_more_button_in_opened_bookshelf, popupMenu.getMenu());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    popupMenu.setForceShowIcon(true);
+                }
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.remove_this_bookshelf_from_library:
+                                onClickRemoveBookshelf(position);
+                                break;
+                            case R.id.rename_this_bookshelf:
+                                openEditTitleOfOpenedBookshelfFragment();
+                                break;
+                        }
+                        return false;
+                    }
+                });
             }
         });
 
@@ -98,6 +122,15 @@ public class BarInOpenedBookshelfFragment extends Fragment {
                 openEditTitleOfOpenedBookshelfFragment();
             }
         });
+    }
+
+    private void onClickRemoveBookshelf(int position) {
+        BookshelfDatabase.getInstance(getContext()).bookshelfDAO().deleteBookshelf(BookshelfFragment.mListBookShelf.get(position));
+        BookshelfFragment.mListBookShelf = BookshelfDatabase.getInstance(getContext()).bookshelfDAO().getListBookshelf();
+
+        Toast.makeText(getContext(), "Đã xóa 1 giá sách khỏi thư viện!", Toast.LENGTH_SHORT).show();
+
+        ((OpenedBookshelfActivity) getActivity()).finish();
     }
 
     private void openEditTitleOfOpenedBookshelfFragment() {
