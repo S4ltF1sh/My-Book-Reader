@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/remove_for_bookshelfs_in_bookshelf_view"
-        android:title="Remove"
+        android:title="Xóa giá sách"
+        android:icon="@drawable/ic_baseline_remove_circle_outline_24"
         app:showAsAction="never" />
 </menu>

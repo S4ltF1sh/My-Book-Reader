@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/remove_this_bookshelf_from_library"
-        android:icon="@drawable/ic_baseline_remove_24"
+        android:icon="@drawable/ic_baseline_remove_circle_outline_24"
         android:title="Xóa giá sách này"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/rename_this_bookshelf"

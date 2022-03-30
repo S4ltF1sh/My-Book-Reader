@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -80,6 +81,9 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
             public boolean onLongClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu_for_books_in_opened_bookshelf, popupMenu.getMenu());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    popupMenu.setForceShowIcon(true);
+                }
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override

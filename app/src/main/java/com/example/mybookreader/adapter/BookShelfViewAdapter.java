@@ -3,6 +3,7 @@ package com.example.mybookreader.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -71,6 +72,9 @@ public class BookShelfViewAdapter extends RecyclerView.Adapter<BookShelfViewAdap
             public boolean onLongClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu_for_bookshelfs_in_bookshelf_view, popupMenu.getMenu());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    popupMenu.setForceShowIcon(true);
+                }
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override

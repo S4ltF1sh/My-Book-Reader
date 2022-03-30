@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/read_for_books_in_opened_bookshelf"
-        android:title="Read"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_baseline_read_more_24"
+        android:title="Đọc"
+        app:showAsAction="never" />
 
-<!--    <item-->
-<!--        android:id="@+id/add_to_bookshelf"-->
-<!--        android:title="Add to bookshelf"-->
-<!--        app:showAsAction="never"/>-->
+    <!--    <item-->
+    <!--        android:id="@+id/add_to_bookshelf"-->
+    <!--        android:title="Add to bookshelf"-->
+    <!--        app:showAsAction="never"/>-->
 
     <item
         android:id="@+id/remove_from_bookshelf_for_books_in_opened_bookshelf"
-        android:title="Remove from bookshelf"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_baseline_remove_24"
+        android:title="Xóa khỏi giá sách"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/remove_from_library_for_books_in_opened_bookshelf"
-        android:title="Remove from library"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_baseline_remove_circle_outline_24"
+        android:title="Xóa khỏi thư viện"
+        app:showAsAction="never" />
 </menu>
