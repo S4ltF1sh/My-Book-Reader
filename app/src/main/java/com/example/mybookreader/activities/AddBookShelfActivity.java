@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.R;
@@ -29,13 +30,14 @@ public class AddBookShelfActivity extends AppCompatActivity {
 
         setIdAndValue();
         setListener();
+
+        Util.showKeyBoard(this);
     }
 
     private void setIdAndValue() {
-        mBookShelfName = (EditText) findViewById(R.id.edt_bookshelf_name);
+        mBookShelfName = findViewById(R.id.edt_bookshelf_name);
         mBookShelfName.requestFocus();
-        Util.showKeyBoard(this);
-        mBtnAddBookShelf = (Button) findViewById(R.id.btn_addBookShelf);
+        mBtnAddBookShelf = findViewById(R.id.btn_addBookShelf);
     }
 
     private void setListener() {
@@ -55,6 +57,10 @@ public class AddBookShelfActivity extends AppCompatActivity {
     }
 
     private void onClickAddBookShelf(String bookshelfName) {
+        if (bookshelfName.equals("")) {
+            Toast.makeText(this, "Hãy nhập tên giá sách!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(AddBookShelfActivity.this, BookshelfFragment.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("new_bookshelf", new BookShelf(bookshelfName));

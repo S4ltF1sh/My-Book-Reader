@@ -2,11 +2,7 @@ package com.example.mybookreader.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Window;
 
 import com.example.mybookreader.R;
@@ -16,11 +12,11 @@ import com.example.mybookreader.fragments.BookshelfFragment;
 import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.model.Book;
 import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.listener.OnDrawListener;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public class PDFOpenerActivity extends AppCompatActivity {
 
@@ -31,7 +27,7 @@ public class PDFOpenerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_pdfreader);
 
         pdfView = findViewById(R.id.pdfView);

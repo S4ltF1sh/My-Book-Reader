@@ -17,4 +17,9 @@
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/gray_dark_mode_background_for_item</item>
     </style>
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:windowBackground">@drawable/ic_splash_screen</item>
+        <item name="backgroundColor">#2b2b2b</item>
+    </style>
 </resources>

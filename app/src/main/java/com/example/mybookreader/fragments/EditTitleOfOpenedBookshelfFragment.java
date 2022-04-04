@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.activities.OpenedBookshelfActivity;
@@ -71,6 +72,10 @@ public class EditTitleOfOpenedBookshelfFragment extends Fragment {
     }
 
     private void openBarInOpenedBookshelfActivityFragment() {
+        if (edt_newTitle.getText().toString().trim().equals("")) {
+            Toast.makeText(getContext(), "Hãy nhập tên giá sách!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ((OpenedBookshelfActivity) getActivity()).setTitleBookshelf(edt_newTitle.getText().toString().trim());
         getActivity().getSupportFragmentManager().popBackStack();
         Util.hideKeyboard(getActivity());

@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBookReader">
         <activity
+            android:name=".activities.MainScreenActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
             android:name=".activities.AddBookToBookShelfActivity"
             android:exported="false" />
         <activity
@@ -31,9 +35,10 @@
             android:name=".activities.PDFOpenerActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainScreenActivity"
+            android:name=".activities.FadingSplashScreenActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

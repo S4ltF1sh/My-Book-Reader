@@ -48,8 +48,6 @@ public class OpenedBookshelfActivity extends AppCompatActivity {
 
         //list book view by RecyclerView
         mBookAdapter = new OpenedBookshelfAdapter(this);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-//        rcvBook.setLayoutManager(gridLayoutManager);
         mBookAdapter.setData(BookshelfFragment.mListBookShelf.get(position).getListBook());
         rcvBook.setAdapter(mBookAdapter);
     }

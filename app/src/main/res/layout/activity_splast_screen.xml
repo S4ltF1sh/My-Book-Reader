@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2b2b2b"
+    tools:context=".activities.FadingSplashScreenActivity">
+
+        <ImageView
+            android:id="@+id/spl_scr_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_splash_screen"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/spl_scr_app_name"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="MY BOOK READER"
+            android:textColor="@color/cyan_100"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/spl_scr_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spl_scr_app_name"
+            android:layout_marginTop="6dp"
+            android:gravity="center_horizontal"
+            android:text="By DungLe"
+            android:textColor="#7cacf8"
+            android:textSize="20dp" />
+</RelativeLayout>

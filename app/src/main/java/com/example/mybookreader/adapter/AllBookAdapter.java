@@ -32,7 +32,6 @@ import com.example.mybookreader.fragments.HomeFragment;
 import com.example.mybookreader.activities.PDFOpenerActivity;
 import com.example.mybookreader.R;
 import com.example.mybookreader.model.Book;
-import com.example.mybookreader.model.BookShelf;
 
 import java.io.File;
 import java.util.ArrayList;

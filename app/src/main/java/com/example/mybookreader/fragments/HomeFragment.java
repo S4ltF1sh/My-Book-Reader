@@ -2,6 +2,7 @@ package com.example.mybookreader.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,17 +12,20 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-//import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybookreader.R;
@@ -31,12 +35,9 @@ import com.example.mybookreader.adapter.AllBookAdapter;
 import com.example.mybookreader.database.BookDatabase;
 import com.example.mybookreader.model.Book;
 import com.example.mybookreader.utils.Util;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,9 +49,12 @@ public class HomeFragment extends Fragment {
     public static List<Book> listBook = new ArrayList<>();
     private static boolean isCalled = false;
     private Button btn_addBook;
-    private TabLayout tabLayout;
+    private LinearLayout lnl_sortBy;
+    private TextView tv_sortingStatus;
+    private boolean isSortedByName = true;
 
     private EditText edt_searchBar;
+    private String oldText = "", newText = "";
     private Handler mHandler = new Handler();
     Runnable mFilterTask = new Runnable() {
         @Override
@@ -60,6 +64,7 @@ public class HomeFragment extends Fragment {
     };
 
     private RecyclerView rcvBook;
+    @SuppressLint("StaticFieldLeak")
     private static AllBookAdapter mAllBookAdapter;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
@@ -121,11 +126,15 @@ public class HomeFragment extends Fragment {
 
         setListeners();
 
+        Util.setupUI(mView, getActivity(), edt_searchBar);
+
         return mView;
     }
 
     private void setIdAndValue() {
         edt_searchBar = mView.findViewById(R.id.edt_search_bar);
+        lnl_sortBy = mView.findViewById(R.id.lnl_sort_by);
+        tv_sortingStatus = mView.findViewById(R.id.tv_sorting_status);
 
         //list book view by RecyclerView
         rcvBook = mView.findViewById(R.id.rcv_book);
@@ -136,61 +145,31 @@ public class HomeFragment extends Fragment {
 
         //add new book
         btn_addBook = mView.findViewById(R.id.btn_addBook);
-
-        //tabLayout
-        tabLayout = mView.findViewById(R.id.tab_layout_home_fragment);
-        tabLayout.addTab(tabLayout.newTab().setText("Theo tên"));
-        tabLayout.addTab(tabLayout.newTab().setText("Theo tác giả"));
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            View tab = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
-            p.setMargins(0, 0, 16, 0);
-            tab.requestLayout();
-        }
     }
 
     private void setListeners() {
-        edt_searchBar.addTextChangedListener(new TextWatcher() {
-
+        lnl_sortBy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_for_sorting_list_book, popupMenu.getMenu());
+                popupMenu.show();
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-//                searchBook();
-                mHandler.removeCallbacks(mFilterTask);
-                mHandler.postDelayed(mFilterTask, 300);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        sortBookByName();
-                        break;
-                    case 1:
-                        sortBookByNameOfAuthor();
-                        break;
-                    default:
-                        sortBookByName();
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.sort_by_name:
+                                sortBookByName();
+                                break;
+                            case R.id.sort_by_author:
+                                sortBookByNameOfAuthor();
+                                break;
+                        }
+                        return false;
+                    }
+                });
             }
         });
 
@@ -207,31 +186,70 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
+        edt_searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                searchBook();
+                mHandler.removeCallbacks(mFilterTask);
+                mHandler.postDelayed(mFilterTask, 300);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
     }
 
     private void sortBookByNameOfAuthor() {
+        edt_searchBar.clearFocus();
         edt_searchBar.setText("");
         Util.hideKeyboard(getActivity());
 
-        List<Book> tmpListBook = new ArrayList<>();
-        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor();
-        mAllBookAdapter.setData(tmpListBook);
+//        List<Book> tmpListBook = new ArrayList<>();
+//        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor();
+//        mAllBookAdapter.setData(tmpListBook);
+        listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor();
+        mAllBookAdapter.setData(listBook);
+
+        tv_sortingStatus.setText("Theo tác giả");
+        isSortedByName = false;
     }
 
     private void sortBookByName() {
+        edt_searchBar.clearFocus();
         edt_searchBar.setText("");
         Util.hideKeyboard(getActivity());
 
-        List<Book> tmpListBook = new ArrayList<>();
-        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
-        mAllBookAdapter.setData(tmpListBook);
+//        List<Book> tmpListBook = new ArrayList<>();
+//        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
+//        mAllBookAdapter.setData(tmpListBook);
+        listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
+        mAllBookAdapter.setData(listBook);
+
+        tv_sortingStatus.setText("Theo tên");
+        isSortedByName = true;
     }
 
     private void searchBook() {
-        String keyWord = edt_searchBar.getText().toString().trim();
-        List<Book> tmpListBook = new ArrayList<>();
-        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(keyWord);
-        mAllBookAdapter.setData(tmpListBook);
+        oldText = newText;
+        newText = edt_searchBar.getText().toString().trim();
+        if (!newText.equals(oldText)) {
+            if (!newText.equals("")) {
+                List<Book> tmpListBook;
+                tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
+                mAllBookAdapter.setData(tmpListBook);
+            } else {
+                if (isSortedByName)
+                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName());
+                else
+                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor());
+            }
+        }
     }
 
     public void loadData() {
@@ -239,7 +257,7 @@ public class HomeFragment extends Fragment {
             listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
             mAllBookAdapter.setData(listBook);
         } catch (Exception e) {
-
+            System.out.println("Catch a exception, cant load data");
         }
     }
 }

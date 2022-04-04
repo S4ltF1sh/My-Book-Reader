@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mybookreader.R;
 import com.example.mybookreader.utils.UriUtils;
@@ -100,8 +101,10 @@ public class AddBookActivity extends AppCompatActivity {
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTitle.getText().toString().equals("") || mTitle.getText().equals("") || uriFile == null || uriCover == null)
+                if (mTitle.getText().toString().trim().equals("") || mTitle.getText().toString().trim().equals("") || uriFile == null || uriCover == null) {
+                    Toast.makeText(AddBookActivity.this, "Hãy nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
                     return;
+                }
                 title = String.valueOf(mTitle.getText());
                 author = String.valueOf(mAuthor.getText());
                 Intent intent = new Intent(AddBookActivity.this, MainScreenActivity.class);
