@@ -76,7 +76,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="Xắp sếp theo " />
+                            android:text="Xắp sếp theo "
+                            android:textColor="@color/gray_dark_mode_for_text" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -91,6 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="16dp"
                         android:text="Theo tên"
+                        android:textColor="@color/gray_dark_mode_for_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
