@@ -2,12 +2,10 @@ package com.example.mybookreader.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import com.example.mybookreader.activities.OpenedBookshelfActivity;
 import com.example.mybookreader.database.BookshelfDatabase;
 
 public class BarInOpenedBookshelfFragment extends Fragment {
-    public final static int FRAGMENT_CODE = 182002;
 
     private View mView;
     private LinearLayout lnl_openedBookshelfNameAndNumberOfBooks;
@@ -142,5 +139,14 @@ public class BarInOpenedBookshelfFragment extends Fragment {
                 .replace(R.id.frl_fragment_content, nextFrag)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void updateNumberOfBook() {
+        if (BookshelfFragment.mListBookShelf.get(position).getListBook().size() > 0) {
+            numOfBooks = String.valueOf(BookshelfFragment.mListBookShelf.get(position).getListBook().size()) + " cuốn";
+        } else {
+            numOfBooks = "Trống";
+        }
+        tv_numberOfBooks.setText(numOfBooks);
     }
 }

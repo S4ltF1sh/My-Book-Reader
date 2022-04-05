@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybookreader.activities.MainScreenActivity;
 import com.example.mybookreader.activities.OpenedBookshelfActivity;
 import com.example.mybookreader.activities.PDFOpenerActivity;
 import com.example.mybookreader.R;
@@ -134,6 +135,7 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
                                 }
                             }
                         }
+                        ((OpenedBookshelfActivity) mContext).updateNumberOfBook();
 
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, mListBook.size());
@@ -155,6 +157,7 @@ public class OpenedBookshelfAdapter extends RecyclerView.Adapter<OpenedBookshelf
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mListBook.size());
 
+        ((OpenedBookshelfActivity) mContext).updateNumberOfBook();
         Toast.makeText(mContext, "Đã xóa 1 cuốn sách ra khỏi " + BookshelfFragment.mListBookShelf.get(position_of_bookshelf).getName() + "!",
                 Toast.LENGTH_SHORT).show();
     }

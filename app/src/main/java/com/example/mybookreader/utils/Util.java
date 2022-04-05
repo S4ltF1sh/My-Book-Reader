@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class Util {
-    public static void hideKeyboard(Activity activity) {
+    public static void hideKeyBoard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();
@@ -25,6 +25,7 @@ public class Util {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
+    //setup activity for hide keyboard and clear focus a editText when touch outside it.
     public static void setupUI(View view, Activity activity, EditText editText) {
 
         //Set up touch listener for non-text box views to hide keyboard.
@@ -34,7 +35,7 @@ public class Util {
 
                 public boolean onTouch(View v, MotionEvent event) {
                     editText.clearFocus();
-                    hideKeyboard(activity);
+                    hideKeyBoard(activity);
                     return false;
                 }
 

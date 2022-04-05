@@ -24,6 +24,7 @@ import android.provider.Settings;
 import android.widget.Toast;
 
 import com.example.mybookreader.R;
+import com.example.mybookreader.adapter.OpenedBookshelfAdapter;
 import com.example.mybookreader.adapter.ViewPagerAdapter;
 import com.example.mybookreader.model.Book;
 import com.google.android.material.tabs.TabLayout;

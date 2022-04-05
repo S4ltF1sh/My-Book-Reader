@@ -26,7 +26,7 @@ public class AddBookShelfActivity extends AppCompatActivity {
 //        getSupportActionBar().hide();
         setContentView(R.layout.activity_add_book_shelf);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add New BookShelf");
+        getSupportActionBar().setTitle("Khởi tạo giá sách mới");
 
         setIdAndValue();
         setListener();
@@ -51,7 +51,7 @@ public class AddBookShelfActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Util.hideKeyboard(this);
+        Util.hideKeyBoard(this);
         finish();
         return true;
     }
@@ -66,7 +66,7 @@ public class AddBookShelfActivity extends AppCompatActivity {
         bundle.putSerializable("new_bookshelf", new BookShelf(bookshelfName));
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
-        Util.hideKeyboard(this);
+        Util.hideKeyBoard(this);
         finish();
     }
 }

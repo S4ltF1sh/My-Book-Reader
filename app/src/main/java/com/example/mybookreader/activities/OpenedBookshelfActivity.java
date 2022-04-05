@@ -72,4 +72,8 @@ public class OpenedBookshelfActivity extends AppCompatActivity {
         BookshelfFragment.mListBookShelf.get(position).setName(newTitle);
         BookshelfDatabase.getInstance(this).bookshelfDAO().updateBookshelf(BookshelfFragment.mListBookShelf.get(position));
     }
+
+    public void updateNumberOfBook() {
+        ((BarInOpenedBookshelfFragment) getSupportFragmentManager().findFragmentById(R.id.frl_fragment_content)).updateNumberOfBook();
+    }
 }

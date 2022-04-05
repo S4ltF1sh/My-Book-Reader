@@ -61,7 +61,7 @@ public class AddBookToBookShelfActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_to_book_shelf);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add Book To BookShelf");
+        getSupportActionBar().setTitle("Thêm sách vào giá sách");
 
         Bundle bundle = getIntent().getExtras();
         positionOfBookNeedToAddToBookshelf = bundle.getInt("position_of_book_need_to_add_to_bookshelf");

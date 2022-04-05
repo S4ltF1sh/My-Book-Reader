@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,17 +53,18 @@ public class AddBookToBookShelfAdapter extends RecyclerView.Adapter<AddBookToBoo
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickAddBookToBookShelf(position);
+                onClickAddBookToBookShelf(position, bookShelf.getName());
             }
         });
     }
 
-    private void onClickAddBookToBookShelf(int position) {
+    private void onClickAddBookToBookShelf(int position, String bookshelfName) {
         List<Book> tmpBookshelf = BookshelfFragment.mListBookShelf.get(position).getListBook();
         tmpBookshelf.add(HomeFragment.listBook.get(AddBookToBookShelfActivity.positionOfBookNeedToAddToBookshelf));
         BookshelfFragment.mListBookShelf.get(position).setListBook(tmpBookshelf);
 
         BookshelfDatabase.getInstance(mContext).bookshelfDAO().updateBookshelf(BookshelfFragment.mListBookShelf.get(position));
+        Toast.makeText(mContext, "Đã thêm 1 cuốn sách vào " + bookshelfName, Toast.LENGTH_SHORT).show();
         ((Activity) mContext).finish();
     }
 

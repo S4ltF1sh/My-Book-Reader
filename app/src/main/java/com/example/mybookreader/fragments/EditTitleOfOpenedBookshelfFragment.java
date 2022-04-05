@@ -1,9 +1,7 @@
 package com.example.mybookreader.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -59,7 +57,7 @@ public class EditTitleOfOpenedBookshelfFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().popBackStack();
-                Util.hideKeyboard(getActivity());
+                Util.hideKeyBoard(getActivity());
             }
         });
 
@@ -78,6 +76,6 @@ public class EditTitleOfOpenedBookshelfFragment extends Fragment {
         }
         ((OpenedBookshelfActivity) getActivity()).setTitleBookshelf(edt_newTitle.getText().toString().trim());
         getActivity().getSupportFragmentManager().popBackStack();
-        Util.hideKeyboard(getActivity());
+        Util.hideKeyBoard(getActivity());
     }
 }

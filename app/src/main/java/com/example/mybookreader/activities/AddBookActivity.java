@@ -23,12 +23,12 @@ import com.example.mybookreader.model.Book;
 
 public class AddBookActivity extends AppCompatActivity {
 
-    TextView mUriCover, mUriFile;
-    EditText mTitle, mAuthor;
-    Button mAdd;
-    ConstraintLayout mLinkCover, mLinkFile;
+    private TextView mUriCover, mUriFile;
+    private EditText mTitle, mAuthor;
+    private Button mAdd;
+    private ConstraintLayout mLinkCover, mLinkFile;
 
-    String title, author, uriFile, uriCover;
+    private String title, author, uriFile, uriCover;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {

@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:text="Add to new bookshelf"
+        android:text="Thêm vào giá sách mới"
         android:shadowRadius="@integer/material_motion_duration_long_2"/>
 
 </RelativeLayout>

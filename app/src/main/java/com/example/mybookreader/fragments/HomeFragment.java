@@ -76,14 +76,13 @@ public class HomeFragment extends Fragment {
                         Book book;
                         if (intent != null) {
                             book = (Book) intent.getExtras().get("new_book");
+                            BookDatabase.getInstance(getActivity()).bookDAO().insertBook(book);
+                            Toast.makeText(getActivity(), "Đã thêm 1 cuốn sách vào thư viện", Toast.LENGTH_SHORT).show();
+
+                            loadData();
                         } else {
                             return;
                         }
-
-                        BookDatabase.getInstance(getActivity()).bookDAO().insertBook(book);
-                        Toast.makeText(getActivity(), "Đã thêm 1 cuốn sách vào thư viện", Toast.LENGTH_SHORT).show();
-
-                        loadData();
                     }
                 }
             }
@@ -105,9 +104,14 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onResume() {
+        //edt_searchBar.setText("");
+        edt_searchBar.clearFocus();
+
         if (mAllBookAdapter != null) {
-            mAllBookAdapter.setData(listBook);
+            searchBook();
+            //mAllBookAdapter.setData(listBook);
         }
+
         super.onResume();
     }
 
@@ -190,11 +194,11 @@ public class HomeFragment extends Fragment {
         edt_searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                searchBook();
                 mHandler.removeCallbacks(mFilterTask);
                 mHandler.postDelayed(mFilterTask, 300);
             }
@@ -208,7 +212,7 @@ public class HomeFragment extends Fragment {
     private void sortBookByNameOfAuthor() {
         edt_searchBar.clearFocus();
         edt_searchBar.setText("");
-        Util.hideKeyboard(getActivity());
+        Util.hideKeyBoard(getActivity());
 
 //        List<Book> tmpListBook = new ArrayList<>();
 //        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor();
@@ -223,7 +227,7 @@ public class HomeFragment extends Fragment {
     private void sortBookByName() {
         edt_searchBar.clearFocus();
         edt_searchBar.setText("");
-        Util.hideKeyboard(getActivity());
+        Util.hideKeyBoard(getActivity());
 
 //        List<Book> tmpListBook = new ArrayList<>();
 //        tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
@@ -238,23 +242,41 @@ public class HomeFragment extends Fragment {
     private void searchBook() {
         oldText = newText;
         newText = edt_searchBar.getText().toString().trim();
-        if (!newText.equals(oldText)) {
-            if (!newText.equals("")) {
-                List<Book> tmpListBook;
-                tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
-                mAllBookAdapter.setData(tmpListBook);
-            } else {
-                if (isSortedByName)
-                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName());
-                else
-                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor());
-            }
+//        if (!newText.equals(oldText)) {
+//            if (!newText.equals("")) {
+//                List<Book> tmpListBook;
+//                tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
+//                mAllBookAdapter.setData(tmpListBook);
+////                listBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
+////                mAllBookAdapter.setData(listBook);
+//            } else {
+//                if (isSortedByName)
+//                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName());
+//                else
+//                    mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor());
+//            }
+//        }
+
+        if (!newText.equals("")) {
+//            List<Book> tmpListBook;
+//            tmpListBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
+//            mAllBookAdapter.setData(tmpListBook);
+            listBook = BookDatabase.getInstance(getActivity()).bookDAO().searchBook(newText);
+            mAllBookAdapter.setData(listBook);
+        } else {
+            if (isSortedByName)
+                mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName());
+            else
+                mAllBookAdapter.setData(BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor());
         }
     }
 
     public void loadData() {
         try {
-            listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
+            if (isSortedByName)
+                listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByName();
+            else
+                listBook = BookDatabase.getInstance(getActivity()).bookDAO().getListBookSortedByNameOfAuthor();
             mAllBookAdapter.setData(listBook);
         } catch (Exception e) {
             System.out.println("Catch a exception, cant load data");
